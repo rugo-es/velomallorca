@@ -21,7 +21,8 @@ function checkToken(){
     .done(function (response) { 
       loadUserInfo(response.user)
     })
-    .fail( function(jqXHR, textStatus, errorThrown){
+    .fail( function(jqXHR, textStatus, errorThrown) {
+      localStorage.clear()
       location.href = "/login"
     })
 }
