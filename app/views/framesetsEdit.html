@@ -1,0 +1,52 @@
+{{>partials/layout.header}}
+
+<h1 class="pt-5 mb-5">EDITAR FRAMESET</h1>
+<div class="row">
+  <div class="col col-lg-7 pb-5">
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="form-group mb-3">
+          <label for="brand">Marca</label>
+          <input type="text" class="form-control" id="brand">
+          <div class="invalid-feedback">Introduce la marca.</div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="form-group mb-3">
+          <label for="model">Modelo</label>
+          <input type="text" class="form-control" id="model">
+          <div class="invalid-feedback">Introduce el modelo.</div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="form-group mb-3">
+          <label for="price">Precio</label>
+          <input type="number" class="form-control" id="price">
+          <div class="invalid-feedback">Introduce el precio.</div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group mb-3">
+      <label for="description">Descripción</label>
+      <textarea class="form-control" id="description" rows="3"></textarea>
+      <div class="invalid-feedback">Introduce una descripción.</div>
+    </div>
+    <div class="d-flex align-items-center mt-4 mb-3">
+      <h2 class="d-inline mb-0 me-3">Colores</h2>
+      <button type="button" class="btn btn-sm btn-outline-dark" onclick="addColor()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus-circle pb-1" viewBox="0 0 16 16">
+          <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+          <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+        </svg>
+        Agregar color
+      </button>
+    </div>
+    <div id="colorSelector" class="mb-3"></div>
+    <div id="colorContainer" class="mb-3"></div>
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary mt-3" onclick="submit()">Aceptar</button>
+    </div>
+  </div> 
+</div>
+
+{{>partials/layout.footer}}

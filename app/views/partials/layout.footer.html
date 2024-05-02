@@ -1,0 +1,84 @@
+  
+    </main>
+
+    <!-- Details modal -->
+    <div class="modal fade" id="detailsModal" tabindex="-1" aria-labelledby="detailsModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-xl modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="detailsModalLabel">TU CONFIGURACION EN DETALLE</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div id="detailsModalContent" class="modal-body row"></div>
+          <div class="modal-footer fs-3 fw-bold">
+            <span id="totalPriceModal"></span> €
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Description modal -->
+    <div class="modal fade" id="descriptionModal" tabindex="-1" aria-labelledby="descriptionModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div id="descriptionModalContent" class="modal-body row">
+            <div class="col-12 col-lg-6">
+              <img id="descriptionModalImage" class="w-100 pt-2 pb-5 px-5" src="" alt="">
+            </div>
+            <div class="col-12 col-lg-6 d-flex flex-column">
+              <span id="descriptionModalType"></span>
+              <span id="descriptionModalBrandAndModel" class="fs-2 fw-bold"></span>
+              <span id="descriptionModalDescription" class="fs-5 mt-3"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Message modal -->
+    <div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="messageModalLabel"></h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p id="messageModalText"></p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Aceptar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Delete frameset modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="deleteModalLabel">Eliminar</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <span>¿Quieres eliminar <span class="fw-bold" id="deleteDescription"></span>?</span>
+            <img id="deleteImage" class="w-100 py-3 px-5" src="" alt="object to delete">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="button" id="deleteBtn" class="btn btn-danger" onclick="func()">Eliminar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {{#scripts}}
+    <script src="{{{.}}}"></script>
+    {{/scripts}}
+    
+  </body>
+</html>

@@ -1,0 +1,178 @@
+{{>partials/layout.headerBuilder}}
+
+<div class="row container-canvas">
+
+  <!-- Canvas container -->
+  <div class="col d-flex flex-column h-100 p-0 mainContainer">
+    <div class="mb-2 d-none d-lg-block" style="background-color: rgba(0, 0, 0, 0.4)">
+      <nav>
+        <ul class="d-flex align-items-center justify-content-center my-2 list-unstyled gap-1">
+          <li id="navFramesetContainer">
+            <button id="navFrameset" class="btn btn-sm btn-primary rounded-pill py-1" onclick="showFramesets()">Framesets</button>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-double-right" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708"/>
+              <path fill-rule="evenodd" d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708"/>
+            </svg>
+          </li>
+          <li id="navBarsContainer">
+            <button id="navBars" class="btn btn-sm btn-primary rounded-pill py-1 disabled" onclick="showBars()">Bars</button>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-double-right" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708"/>
+              <path fill-rule="evenodd" d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708"/>
+            </svg>
+          </li>
+          <li id="navSetContainer">
+            <button id="navSet" class="btn btn-sm btn-primary rounded-pill py-1 disabled" onclick="showSets()">Sets</button>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-double-right" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708"/>
+              <path fill-rule="evenodd" d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708"/>
+            </svg>
+          </li>
+          <li id="navWheelsContainer">
+            <button id="navWheels" class="btn btn-sm btn-primary rounded-pill py-1 disabled"  onclick="showWheels()">Wheels</button>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-double-right" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708"/>
+              <path fill-rule="evenodd" d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708"/>
+            </svg>
+          </li>
+          <li id="navTyresContainer">
+            <button id="navTyres" class="btn btn-sm btn-primary rounded-pill py-1 disabled" onclick="showTyres()">Tyres</button>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-double-right" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708"/>
+              <path fill-rule="evenodd" d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708"/>
+            </svg>
+          </li>
+          <li id="navSeatpotsContainer">
+            <button id="navSeatpots" class="btn btn-sm btn-primary rounded-pill py-1 disabled" onclick="showSeatpots()">Seatpots</button>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-double-right" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708"/>
+              <path fill-rule="evenodd" d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708"/>
+            </svg>
+          </li>
+          <li id="navSaddlesContainer">
+            <button id="navSaddles" class="btn btn-sm btn-primary rounded-pill py-1 disabled" onclick="showSaddles()">Saddles</button>
+          </li>
+        </ul>
+      </nav>
+    </div>
+
+    <div class="z-2 d-none d-lg-flex" style="position: absolute; top: 140px; width: 100%;">
+      <div id="containerLabelAndDescription" class="d-flex flex-column ps-5 invisible" style="width: 40%; min-width: 400px;">
+        <span id="labelBrandModel" class="fs-3 fw-bold">&nbsp;</span>
+        <div>
+          <button class="btn btn-primary btn-sm py-1 px-2" onclick="showDescriptionModal()">Descripción</button>
+        </div>
+      </div>
+      <div id="containerColorSelector" class="ps-3 invisible">
+        <span class="d-block">Color: <span id="colorSelector"></span></span>
+        <div id="containerSelectorColorItems" class="d-flex"></div>
+      </div>
+    </div>
+
+    <div class="flex-lg-grow-1 d-flex justify-content-center align-items-center">
+      <div id="landingNoSelectedFrameset" class="col text-center">
+        <h2>Configurador de bicicleta</h2>
+        <h2 class="mt-5">Por favor,</h2>
+        <h2>Selecciona un frameset</h2>
+      </div>
+      <div id="containerCanvas" class="col text-center d-none d-flex align-items-center justify-content-center h-100 mt-3">
+        <canvas id="canvasBuilder" width="850" height="510" class=""></canvas>
+      </div>
+    </div>
+
+    <div class="d-block d-lg-none">
+      <div id="containerDetailsMobile" class="px-3 d-none">
+        <div class="d-flex justify-content-between align-items-end">
+          <button class="btn btn-primary btn-sm py-1 px-2" onclick="showDescriptionModal()">Descripción</button>
+          <div id="containerColorSelectorMobile" class="invisible">
+            <span class="d-block">Color: <span id="colorSelector"></span></span>
+            <div id="containerSelectorColorItemsMobile" class="d-flex"></div>
+          </div>
+        </div>
+        <div id="containerLabelAndDescriptionMobile" class="d-flex flex-column invisible">
+          <span id="labelBrandModelMobile" class="fs-3 fw-bold">&nbsp;</span>
+        </div>
+      </div>
+    </div>
+    <div class="d-flex flex-column-reverse flex-lg-row py-2 px-3 mt-3">
+      <div class="mt-3 flex-grow-1 d-flex flex-lg-row align-items-lg-center gap-2">
+        <button class="btn btn-primary rounded-pill p-2" onclick="resetBike()" >
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-counterclockwise" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2z"/>
+            <path d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466"/>
+          </svg>
+        </button>
+        <button class="btn btn-primary rounded-pill px-1 py-2">
+          &nbsp;
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-share-fill" viewBox="0 0 16 16">
+            <path d="M11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.5 2.5 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5"/>
+          </svg>
+          &nbsp;
+        </button>
+      </div>
+      <div class="d-flex flex-row-reverse justify-content-between align-items-lg-center gap-3">
+        <span class="fs-3 fw-bold">
+          <span id="totalPrice">0,00</span> €
+        </span>
+        <button class="btn btn-primary p-2" onclick="showDetailsModal()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+          </svg>
+          Ver detalles
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Items selector -->
+  <div class="p-0 container-selector z-3">
+    <div class="d-flex flex-column h-100">
+      <div class="bg-dark text-white d-none d-lg-flex justify-content-between align-items-center p-2">
+        <div>
+          <button id="selectorNavBack" class="btn btn-primary rounded-pill p-2 disabled" onclick="">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5"/>
+            </svg>
+          </button>
+        </div>
+        <span id="selectorNavLabel" class="fs-4">FRAMESETS</span>
+        <div>
+          <button id="selectorNavNext" class="btn btn-primary rounded-pill p-2 disabled" onclick="">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-right-short" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="flex-lg-grow-1 overflow-auto">
+        <div class="list-group" id="container-items"></div>
+      </div>
+      <div class="">
+        <button id="selectorNavContinue" class="btn btn-light w-100 py-3 border disabled d-none d-lg-block" onclick="">
+          <span class="fs-4">
+            CONTINUAR
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-right-short mb-1" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8"/>
+            </svg>
+          </span>
+        </button>
+        <div class="d-flex align-items-center justify-content-between d-lg-none bg-primary text-white py-3 px-3">
+            <button id="selectorNavBackMobile" class="btn btn-light rounded-pill p-2 invisible" onclick="">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5"/>
+              </svg>
+            </button>
+            <span id="selectorNavLabelMobile" class="fs-4">FRAMESET (1/8)</span>
+            <button id="selectorNavNextMobile" class="btn btn-light rounded-pill p-2" onclick="">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-right-short" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8"/>
+              </svg>
+            </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+{{>partials/layout.footer}}

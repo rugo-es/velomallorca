@@ -1,0 +1,27 @@
+{{>partials/layout.header}}
+
+<script>
+  let token = localStorage.getItem('token');
+  if(token) {
+    window.location.href = '/app/framesets'
+  }
+</script>
+
+<form id="formLogin" onSubmit="login(); return false;">
+  <img class="mb-4" src="/img/veloMallorcaLogo.png" alt="" width="120">
+  <h1 class="h3 mb-3 fw-normal">Admin zone</h1>
+  <div class="form-floating">
+    <input type="email" class="form-control" id="email" placeholder="Email address">
+    <label for="email">Email address</label>
+  </div>
+  <div class="form-floating">
+    <input type="password" class="form-control" id="password" placeholder="Password">
+    <label for="password">Password</label>
+  </div>
+  <button class="w-100 mt-3 py-4 btn btn-lg btn-primary" type="submit">Iniciar sesión</button>
+  <!-- <a href="/register"><button type="button" class="btn btn-link">Sing up</button></a> -->
+  <a href="/"><button type="button" class="btn btn-link">Ir a configurador</button></a>
+  <p class="mt-5 mb-3 text-muted">&copy; 2024</p>
+</form>
+
+{{>partials/layout.footer}}

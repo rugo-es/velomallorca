@@ -1,0 +1,87 @@
+@media screen and (max-width: 991px) {
+  .container-canvas {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 76px);
+  }
+  .mainContainer {
+    flex: 1;
+    overflow-y: auto;
+  }
+  .container-selector {
+    height: auto;
+  }
+  .list-group {
+    flex-direction: row;
+  }
+  .itemSelected {
+    border-top: 3px solid black !important;
+  }
+  .cardBrandAndModel {
+    display: block;
+    width: 180px; 
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-top: 0.2rem;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .container-canvas {
+    height: 100% !important;
+  }
+  .container-selector {
+    -ms-flex: 0 0 400px;
+    flex: 0 0 400px;
+    height: 100% !important;
+  }
+  .itemSelected {
+    border-left: 3px solid black !important;
+  }
+}
+
+#canvasBuilder {
+  width: 100%;
+  max-width: 1000px;
+}
+@media screen and (min-width: 0px) and (max-width: 1500px) {
+  #canvasBuilder {
+    max-width: 780px;
+  }
+}
+
+body {
+  color: black;
+}
+
+.btn-primary:hover {
+  opacity: 0.8;
+}
+
+table td {
+  padding: 0.8rem !important;
+}
+
+.deleteColorBtn:hover {
+  cursor: pointer;
+}
+
+/* navbar */
+.no-arrow .dropdown-toggle::after {
+  display:none
+}
+
+.img-profile {
+  height:2.4rem;
+  width:2.4rem
+}
+
+.btnColorSelected {
+  outline: 2px solid black !important;
+  outline-offset: 2px !important; 
+}
+
+.itemSelected {
+  background-color: rgba(0, 0, 0, 0.158) !important;
+}

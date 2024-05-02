@@ -1,0 +1,56 @@
+{{>partials/layout.header}}
+
+<h1 class="pt-5 mb-5">EDITAR BARS</h1>
+<div class="row"> 
+  <div class="col col-lg-7 pb-5">
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="form-group mb-3">
+          <label for="brand">Marca</label>
+          <input type="text" class="form-control" id="brand">
+          <div class="invalid-feedback">Introduce la marca.</div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="form-group mb-3">
+          <label for="model">Modelo</label>
+          <input type="text" class="form-control" id="model">
+          <div class="invalid-feedback">Introduce el modelo.</div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="form-group mb-3">
+          <label for="price">Precio</label>
+          <input type="number" class="form-control" id="price">
+          <div class="invalid-feedback">Introduce el precio.</div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group mb-3">
+      <label for="description">Descripción</label>
+      <textarea class="form-control" id="description" rows="3"></textarea>
+      <div class="invalid-feedback">Introduce una descripción.</div>
+    </div>
+    <div class="form-group mb-3">
+      <label for="image">Imagen</label>
+      <input type="file" class="form-control" id="image">
+      <div class="invalid-feedback">Selecciona una imagen.</div>
+    </div>
+    <p>Selecciona los puntos de anclaje.</p>
+    <div class="btn-group mb-3 d-block" role="group" aria-label="Basic radio toggle button group">
+      <input type="radio" class="btn-check" name="anchors" id="center" autocomplete="off" onclick="changeAnchor('center')">
+      <label class="btn btn-sm btn-success" for="center" id="centerLabel">Centro</label>
+    </div>
+    <canvas id="canvas" class="border border-primary mb-3" width="500" height="300"></canvas>
+    <div class="form-group mb-3">
+      <label for="shopifyId">ID Shopify</label>
+      <input type="text" class="form-control" id="shopifyId">
+      <div class="invalid-feedback">Introduce una el ID del producto en Shopify.</div>
+    </div>
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary mt-3" onclick="submit()">Aceptar</button>
+    </div>
+  </div> 
+</div>
+
+{{>partials/layout.footer}}
