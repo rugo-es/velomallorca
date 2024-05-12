@@ -5,6 +5,8 @@ app/assets/img/profile/*
 !app/assets/img/profile/.gitignore
 app/assets/img/framesets/*
 !app/assets/img/framesets/.gitignore
+app/assets/img/groupsets/*
+!app/assets/img/groupsets/.gitignore
 app/assets/img/wheels/*
 !app/assets/img/wheels/.gitignore
 app/assets/img/tyres/*

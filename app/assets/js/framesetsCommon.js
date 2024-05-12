@@ -1,5 +1,4 @@
 function addFramesetColorElements(colorId, colorData = null) {
-  console.log(colorData)
   $('#colorSelector').append(`<div id="colorSelector-${colorId}" data-id="${colorId}" class="d-inline-block me-3 mt-1">
     <div class="d-flex">
       <button id="colorSelectorBtn-${colorId}" type="button" class="btn btn-primary rounded-pill" onclick="selectColor(${colorId})" style="background-color: ${colorData?.colorCode ? colorData.colorCode : '#000000'};">

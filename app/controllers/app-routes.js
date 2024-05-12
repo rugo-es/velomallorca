@@ -63,6 +63,68 @@ function framesetsEdit(req, res) {
   })
 }
 
+
+function groupsets(req, res){
+  res.render('groupsets', {
+    title: 'Groupsets', 
+    nav: true,
+    mainClass: 'container mt-5 mb-3 py-5',
+    css: [
+      cdn.css.bootswatch.lux, 
+      cdn.css.datatable,
+      '/css/style.css'
+    ],
+    scripts: [
+      cdn.js.jquery,  
+      cdn.js.bootstrap.bundle, 
+      cdn.js.datatable,
+      cdn.js.datatableBootstrap,
+      '/js/groupsets.js',
+      '/js/app.js' 
+    ]
+  })
+}
+
+function groupsetsAdd(req, res){
+  res.render('groupsetsAdd', {
+    title: 'Groupsets', 
+    nav: true,
+    mainClass: 'container mt-5 mb-3 py-5',
+    css: [
+      cdn.css.bootswatch.lux, 
+      '/css/style.css'
+    ],
+    scripts: [
+      cdn.js.jquery,  
+      cdn.js.bootstrap.bundle, 
+      '/js/alerts.js',
+      '/js/groupsetsCommon.js',
+      '/js/groupsetsAdd.js',
+      '/js/app.js' 
+    ]
+  })
+}
+
+function groupsetsEdit(req, res) {
+  res.render('groupsetsEdit', {
+    title: 'Groupsets', 
+    nav: true,
+    mainClass: 'container mt-5 mb-3 py-5',
+    css: [
+      cdn.css.bootswatch.lux, 
+      '/css/style.css'
+    ],
+    scripts: [
+      cdn.js.jquery,  
+      cdn.js.bootstrap.bundle, 
+      '/js/alerts.js',
+      '/js/groupsetsCommon.js',
+      '/js/groupsetsEdit.js',
+      '/js/app.js' 
+    ],
+  })
+}
+
 function wheels(req, res){
   res.render('wheels', {
     title: 'Wheels', 
@@ -372,6 +434,9 @@ module.exports = {
   framesets,
   framesetsAdd,
   framesetsEdit,
+  groupsets,
+  groupsetsAdd,
+  groupsetsEdit,
   wheels,
   wheelsAdd,
   wheelsEdit,

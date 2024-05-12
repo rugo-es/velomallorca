@@ -1,0 +1,163 @@
+{{>partials/layout.header}}
+
+<h1 class="pt-5 mb-5">AÑADIR GROUPSET</h1>
+<div class="row"> 
+  <div class="col col-lg-7 pb-5">
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="form-group mb-3">
+          <label for="brand">Marca</label>
+          <input type="text" class="form-control" id="brand" value="Shimano">
+          <div class="invalid-feedback">Introduce la marca.</div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="form-group mb-3">
+          <label for="model">Modelo</label>
+          <input type="text" class="form-control" id="model" value="Alterra">
+          <div class="invalid-feedback">Introduce el modelo.</div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="form-group mb-3">
+          <label for="price">Precio</label>
+          <input type="number" class="form-control" id="price" value="560">
+          <div class="invalid-feedback">Introduce el precio.</div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group mb-3">
+      <label for="description">Descripción</label>
+      <textarea class="form-control" id="description" rows="3">Descripcion</textarea>
+      <div class="invalid-feedback">Introduce una descripción.</div>
+    </div>
+
+    <h2>Chainring</h2>
+    <div class="form-group mb-3">
+      <label for="imageChainring">Imagen</label>
+      <input type="file" class="form-control" id="imageChainring">
+      <div class="invalid-feedback">Selecciona una imagen.</div>
+    </div>
+    <div id="containerChainringImage" style="display: none;">
+      <p>Selecciona los puntos de anclaje.</p>
+      <div class="btn-group mb-3 d-block" role="group" aria-label="Basic radio toggle button group">
+        <input type="radio" class="btn-check" name="anchors" id="chainring" autocomplete="off" onclick="changeAnchor('chainring')">
+        <label class="btn btn-sm btn-dark" for="chainring" id="chainringLabel">Centro</label>
+      </div>
+      <canvas id="canvasChainring" class="border border-primary mb-3" width="500" height="300"></canvas>
+      <div class="form-group mb-3">
+        <label for="shopifyIdChainring">ID Shopify</label>
+        <input type="text" class="form-control" id="shopifyIdChainring">
+        <div class="invalid-feedback">Introduce una el ID del producto en Shopify.</div>
+      </div>
+    </div>
+
+    <h2>Cassete</h2>
+    <div class="form-group mb-3">
+      <label for="imageCassete">Imagen</label>
+      <input type="file" class="form-control" id="imageCassete">
+      <div class="invalid-feedback">Selecciona una imagen.</div>
+    </div>
+    <div id="containerCasseteImage" style="display: none;">
+      <p>Selecciona los puntos de anclaje.</p>
+      <div class="btn-group mb-3 d-block" role="group" aria-label="Basic radio toggle button group">
+        <input type="radio" class="btn-check" name="anchors" id="cassete" autocomplete="off" onclick="changeAnchor('cassete')">
+        <label class="btn btn-sm btn-dark" for="cassete" id="casseteLabel">Centro</label>
+      </div>
+      <canvas id="canvasCassete" class="border border-primary mb-3" width="500" height="300"></canvas>
+      <div class="form-group mb-3">
+        <label for="shopifyIdCassete">ID Shopify</label>
+        <input type="text" class="form-control" id="shopifyIdCassete">
+        <div class="invalid-feedback">Introduce una el ID del producto en Shopify.</div>
+      </div>
+    </div>
+
+    <h2>Brake Disk</h2>
+    <div class="form-group mb-3">
+      <label for="imageBrakeDisk">Imagen</label>
+      <input type="file" class="form-control" id="imageBrakeDisk">
+      <div class="invalid-feedback">Selecciona una imagen.</div>
+    </div>
+    <div id="containerBrakeDiskImage" style="display: none;">
+      <p>Selecciona los puntos de anclaje.</p>
+      <div class="btn-group mb-3 d-block" role="group" aria-label="Basic radio toggle button group">
+        <input type="radio" class="btn-check" name="anchors" id="brakeDisk" autocomplete="off" onclick="changeAnchor('brakeDisk')">
+        <label class="btn btn-sm btn-dark" for="brakeDisk" id="brakeDiskLabel">Centro</label>
+      </div>
+      <canvas id="canvasBrakeDisk" class="border border-primary mb-3" width="500" height="300"></canvas>
+      <div class="form-group mb-3">
+        <label for="shopifyIdBrakeDisk">ID Shopify</label>
+        <input type="text" class="form-control" id="shopifyIdBrakeDisk">
+        <div class="invalid-feedback">Introduce una el ID del producto en Shopify.</div>
+      </div>
+    </div>
+
+    <h2>Brake Caliper</h2>
+    <div class="form-group mb-3">
+      <label for="imageBrakeCaliper">Imagen</label>
+      <input type="file" class="form-control" id="imageBrakeCaliper">
+      <div class="invalid-feedback">Selecciona una imagen.</div>
+    </div>
+    <div id="containerBrakeCaliperImage" style="display: none;">
+      <p>Selecciona los puntos de anclaje.</p>
+      <div class="btn-group mb-3 d-block" role="group" aria-label="Basic radio toggle button group">
+        <input type="radio" class="btn-check" name="anchors" id="brakeCaliper" autocomplete="off" onclick="changeAnchor('brakeCaliper')">
+        <label class="btn btn-sm btn-dark" for="brakeCaliper" id="brakeCaliperLabel">Centro</label>
+      </div>
+      <canvas id="canvasBrakeCaliper" class="border border-primary mb-3" width="500" height="300"></canvas>
+      <div class="form-group mb-3">
+        <label for="shopifyIdBrakeCaliper">ID Shopify</label>
+        <input type="text" class="form-control" id="shopifyIdBrakeCaliper">
+        <div class="invalid-feedback">Introduce una el ID del producto en Shopify.</div>
+      </div>
+    </div>
+
+    <h2>Diverter</h2>
+    <div class="form-group mb-3">
+      <label for="imageDiverter">Imagen</label>
+      <input type="file" class="form-control" id="imageDiverter">
+      <div class="invalid-feedback">Selecciona una imagen.</div>
+    </div>
+    <div id="containerDiverterImage" style="display: none;">
+      <p>Selecciona los puntos de anclaje.</p>
+      <div class="btn-group mb-3 d-block" role="group" aria-label="Basic radio toggle button group">
+        <input type="radio" class="btn-check" name="anchors" id="diverter" autocomplete="off" onclick="changeAnchor('diverter')">
+        <label class="btn btn-sm btn-dark" for="diverter" id="diverterLabel">Centro</label>
+      </div>
+      <canvas id="canvasDiverter" class="border border-primary mb-3" width="500" height="300"></canvas>
+      <div class="form-group mb-3">
+        <label for="shopifyIdDiverter">ID Shopify</label>
+        <input type="text" class="form-control" id="shopifyIdDiverter">
+        <div class="invalid-feedback">Introduce una el ID del producto en Shopify.</div>
+      </div>
+    </div>
+
+    <h2>Levers</h2>
+    <div class="form-group mb-3">
+      <label for="imageLevers">Imagen</label>
+      <input type="file" class="form-control" id="imageLevers">
+      <div class="invalid-feedback">Selecciona una imagen.</div>
+    </div>
+    <div id="containerLeversImage" style="display: none;">
+      <p>Selecciona los puntos de anclaje.</p>
+      <div class="btn-group mb-3 d-block" role="group" aria-label="Basic radio toggle button group">
+        <input type="radio" class="btn-check" name="anchors" id="levers" autocomplete="off" onclick="changeAnchor('levers')">
+        <label class="btn btn-sm btn-dark" for="levers" id="leversLabel">Centro</label>
+      </div>
+      <canvas id="canvasLevers" class="border border-primary mb-3" width="500" height="300"></canvas>
+      <div class="form-group mb-3">
+        <label for="shopifyIdLevers">ID Shopify</label>
+        <input type="text" class="form-control" id="shopifyIdLevers">
+        <div class="invalid-feedback">Introduce una el ID del producto en Shopify.</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary mt-3" onclick="submit()">Aceptar</button>
+    </div>
+
+
+  </div> 
+</div>
+
+{{>partials/layout.footer}}
