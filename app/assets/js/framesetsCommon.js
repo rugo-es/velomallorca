@@ -84,7 +84,7 @@ function addFramesetColorElements(colorId, colorData = null) {
               ctx.drawImage(img, 125, 35, 250, img.height * (250/img.width));
             };
             img.src = `/img/framesets/${response.data}`;
-            frameset.colors[colorId].image = img.src;
+            frameset.colors[colorId].image = `/img/framesets/${response.data}`;
             $(`#frontWheelLabel-${colorId}`).removeClass('btn-success btn-danger').addClass('btn-dark')
             $(`#backWheelLabel-${colorId}`).removeClass('btn-success btn-danger').addClass('btn-dark')
             $(`#setLabel-${colorId}`).removeClass('btn-success btn-danger').addClass('btn-dark')

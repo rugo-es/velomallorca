@@ -58,7 +58,7 @@ $(document).ready(() => {
               ctxCassete.drawImage(img, 0, 0, 250, img.height * (250/img.width));
             };
             img.src = `/img/groupsets/${response.data}`;
-            groupset.components.cassete.image = `/img/groupsets/${response.data}`;;
+            groupset.components.cassete.image = `/img/groupsets/${response.data}`;
             $(`#casseteLabel`).removeClass('btn-success btn-danger').addClass('btn-dark')
             groupset.components.cassete.anchors.x = false
             groupset.components.cassete.anchors.y = false
