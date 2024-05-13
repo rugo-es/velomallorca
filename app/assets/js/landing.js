@@ -175,7 +175,7 @@ function showFramesets() {
 }
 
 function showSets() {
-  controlSelectorNav('groupsets')
+  controlSelectorNav('groupset')
   hiddenColorSelectorAndLabel()
   let selected = bike.groupset ? bike.groupset.id : null
   $('#container-items').html('')
@@ -193,7 +193,7 @@ function showSets() {
     `)
   });
   if(bike.groupset) {
-    selectWheel(bike.groupset.id, false)
+    selectGroupset(bike.groupset.id, false)
   }
 }
 
@@ -308,7 +308,7 @@ function showSaddles() {
     `)
   });
   if(bike.saddles) {
-    selectSeatpot(bike.saddles.id, false)
+    selectSaddle(bike.saddles.id, false)
   }
 }
 
@@ -732,6 +732,7 @@ function resetBike() {
   bike = {
     frameset: null,
     bar: null,
+    groupset: null,
     wheels: null,
     tyres: null,
     seatpots: null,
@@ -745,6 +746,7 @@ function resetBike() {
   $('#selectorNavContinue').addClass("disabled")
 
   $('#navBars').addClass("disabled")
+  $('#navSet').addClass("disabled")
   $('#navWheels').addClass("disabled")
   $('#navTyres').addClass("disabled")
   $('#navSeatpots').addClass("disabled")
@@ -763,6 +765,8 @@ function updatePrice() {
   let totalPrice = 0;
   for(const [key, value] of Object.entries(bike)) {
     if(bike[key]?.price) {
+      if(key === 'bar' && bike.frameset.colors[bike.frameset.colorSelected].hasBar) continue
+      if(key === 'seatpots' && bike.frameset.colors[bike.frameset.colorSelected].hasSeatpot) continue
       totalPrice += parseFloat(bike[key]?.price)
     }
   }
@@ -775,9 +779,12 @@ function showDetailsModal() {
   let totalPrice = 0;
   for(const [key, value] of Object.entries(bike)) {
     if(bike[key]) {
+      if(key === 'bar' && bike.frameset.colors[bike.frameset.colorSelected].hasBar) continue
+      if(key === 'seatpots' && bike.frameset.colors[bike.frameset.colorSelected].hasSeatpot) continue
       totalPrice += parseFloat(bike[key].price)
       let image
       if(key === 'frameset') image = bike[key].colors[bike[key].colorSelected].image
+      if(key === 'groupset') image = bike[key].components.chainring.image
       if(['bar', 'wheels', 'tyres', 'seatpots', 'saddles'].includes(key)) image = bike[key].image
       $('#detailsModalContent').append(`
         <div class="col-12 col-lg-6 col-xl-3 mt-2">
@@ -814,36 +821,34 @@ function loadDescriptionModal({type, brand, model, description, image}) {
 }
 
 function controlBreadcrumbs() {
+  $(`#navBars`).addClass("disabled")
+  $(`#navSet`).addClass("disabled")
+  $(`#navWheels`).addClass("disabled")
+  $(`#navTyres`).addClass("disabled")
+  $(`#navSeatpots`).addClass("disabled")
+  $(`#navSaddles`).addClass("disabled")
   if(bike.frameset) {
     if(bike.frameset.colors[bike.frameset.colorSelected].hasBar) {
       $(`#navSet`).removeClass("disabled")
     } else {
-      $(`#navSet`).addClass("disabled")
       $(`#navBars`).removeClass("disabled")
     }
-  } else {
-    $(`#navBars`).addClass("disabled")
-    $(`#navWheels`).addClass("disabled")
   }
   if(bike.bar) {
+    $(`#navSet`).removeClass("disabled")
+  }
+  if(bike.groupset) {
     $(`#navWheels`).removeClass("disabled")
   }
   if(bike.wheels) {
-    $(`#navWheels`).removeClass("disabled")
     $(`#navTyres`).removeClass("disabled")
-  } else {
-    $(`#navTyres`).addClass("disabled")
   }
   if(bike.tyres) {
     if(bike.frameset.colors[bike.frameset.colorSelected].hasSeatpot) {
       $(`#navSaddles`).removeClass("disabled")
     } else {
-      $(`#navSaddles`).addClass("disabled")
       $(`#navSeatpots`).removeClass("disabled")
     }
-  } else {
-    $(`#navSaddles`).addClass("disabled")
-    $(`#navSeatpots`).addClass("disabled")
   }
   if(bike.seatpots) {
     $(`#navSaddles`).removeClass("disabled")
@@ -858,41 +863,53 @@ function controlSelectorNav(item) {
   $selectorNavNext = $('#selectorNavNext')
   $selectorNavNextMobile = $('#selectorNavNextMobile')
   $selectorNavContinue = $('#selectorNavContinue')
-  let label, labelMobile, funcBack, funcNext
+  let label, labelMobile, funcBack, funcNext, step
+  let totalSteps = 8
+  let hasBar = bike.frameset?.colors[bike.frameset.colorSelected].hasBar
+  let hasSeatpot = bike.frameset?.colors[bike.frameset.colorSelected].hasSeatpot
+  if(hasBar) totalSteps--
+  if(hasSeatpot) totalSteps--
   switch(item) {
     case 'frameset':
       label = 'FRAMESETS'
-      labelMobile = 'FRAMESETS (1/8)'
+      labelMobile = `FRAMESETS (1/${totalSteps})`
       funcBack = ''
       funcNext = 'showBars()'
       if(bike.frameset && bike.frameset.colors[bike.frameset.colorSelected].hasBar) { 
-        funcNext = 'showWheels()'
+        funcNext = 'showSets()'
       }
       break;
-    case 'groupsets':
-      label = 'GROUPSETS'
-      labelMobile = 'GROUPSETS (2/8)'
-      funcBack = 'showFramesets()'
-      funcNext = 'showWheels()'
-      break;
     case 'bar':
+      step = 2
       label = 'BARS'
-      labelMobile = 'BARS (2/8)'
+      labelMobile = `BARS (${step}/${totalSteps})`
       funcBack = 'showFramesets()'
-      funcNext = 'showWheels()'
+      funcNext = 'showSets()'
       break;
-    case 'wheels':
-      label = 'WHEELS'
-      labelMobile = 'WHEELS (3/8)'
+    case 'groupset':
+      step = 3
+      if(hasBar) step--
+      label = 'GROUPSETS'
+      labelMobile = `GROUPSETS (${step}/${totalSteps})`
       funcBack = 'showBars()'
-      funcNext = 'showTyres()'
-      if(bike.frameset.colors[bike.frameset.colorSelected].hasBar) { 
+      funcNext = 'showWheels()'
+      if(bike.frameset && bike.frameset.colors[bike.frameset.colorSelected].hasBar) { 
         funcBack = 'showFramesets()'
       }
       break;
+    case 'wheels':
+      step = 4
+      if(hasBar) step--
+      label = 'WHEELS'
+      labelMobile = `WHEELS (${step}/${totalSteps})`
+      funcBack = 'showSets()'
+      funcNext = 'showTyres()'
+      break;
     case 'tyres':
+      step = 5
+      if(hasBar) step--
       label = 'TYRES'
-      labelMobile = 'TYRES (4/8)'
+      labelMobile = `TYRES (${step}/${totalSteps})`
       funcBack = 'showWheels()'
       funcNext = 'showSeatpots()'
       if(bike.frameset && bike.frameset.colors[bike.frameset.colorSelected].hasSeatpot) { 
@@ -900,14 +917,19 @@ function controlSelectorNav(item) {
       }
       break;
     case 'seatpots':
+      step = 6
+      if(hasBar) step--
       label = 'SEATPOT'
-      labelMobile = 'SEATPOT (5/8)'
+      labelMobile = `SEATPOT (${step}/${totalSteps})`
       funcBack = 'showTyres()'
       funcNext = 'showSaddles()'
       break;
     case 'saddles':
+      step = 7
+      if(hasBar) step--
+      if(hasSeatpot) step--
       label = 'SADDLES'
-      labelMobile = 'SADDLE (5/8)'
+      labelMobile = `SADDLE (${step}/${totalSteps})`
       funcBack = 'showSeatpots()'
       funcNext = 'showSaddles()'
       if(bike.frameset && bike.frameset.colors[bike.frameset.colorSelected].hasSeatpot) { 
