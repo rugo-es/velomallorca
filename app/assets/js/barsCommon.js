@@ -20,6 +20,8 @@ $(document).ready(function(){
             $(`#centerLabel`).removeClass('btn-success btn-danger').addClass('btn-dark')
             bar.anchors.center.x = false
             bar.anchors.center.y = false
+            bar.anchors.levers.x = false
+            bar.anchors.levers.y = false
           }
         });
         xhr.open("POST", "/api/uploadAvatar");
@@ -56,7 +58,7 @@ function validateForm() {
   }
   if (!bar.brand || !bar.model || !bar.description 
     || !bar.price || !bar.image || !bar.shopifyId 
-    || validateAnchor('center')) {
+    || validateAnchor('center') || validateAnchor('levers')) {
     return true
   }
   return false
@@ -96,6 +98,9 @@ function getCursorPosition(event) {
   const rect = canvas.getBoundingClientRect()
   const x = event.clientX - rect.left
   const y = event.clientY - rect.top
+  if(!bar.anchors[anchor]) {
+    bar.anchors[anchor] = {x: false, y: false}
+  }
   bar.anchors[anchor].x = x; 
   bar.anchors[anchor].y = y;
   ctx.fillStyle = "red";

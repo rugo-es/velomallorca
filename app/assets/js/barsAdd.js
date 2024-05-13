@@ -6,7 +6,8 @@ let bar = {
   image: '',
   shopifyId: '',
   anchors: {
-    center: {x: false, y: false}
+    center: {x: false, y: false},
+    levers: {x: false, y: false}
   }
 };
 let anchor = null;

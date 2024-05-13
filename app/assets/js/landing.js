@@ -1,5 +1,6 @@
 let bike = {
   frameset: null,
+  groupset: null,
   bar: null,
   wheels: null,
   tyres: null,
@@ -7,6 +8,7 @@ let bike = {
   saddles: null
 }
 let framesets = []
+let groupsets = []
 let bars = []
 let wheels = []
 let tyres = []
@@ -17,6 +19,7 @@ const ctx = canvas.getContext("2d");
 
 $(document).ready(() => {
   getFramesets()
+  getGroupsets()
   getBars()
   getWheels()
   getTyres()
@@ -36,6 +39,23 @@ function getFramesets() {
     .done(function (response) { 
       framesets = response;
       showFramesets()
+    })
+    .fail( function(jqXHR, textStatus, errorThrown){
+      console.log(textStatus)
+    })
+}
+
+function getGroupsets() {
+  var settings = {
+    "url": "/api/groupsets",
+    "method": "GET",
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  };
+  $.ajax(settings)
+    .done(function (response) { 
+      groupsets = response;
     })
     .fail( function(jqXHR, textStatus, errorThrown){
       console.log(textStatus)
@@ -151,6 +171,29 @@ function showFramesets() {
     let colorSelected = bike.frameset.colorSelected
     selectFrameset(bike.frameset.id, false)
     selectFramesetColor(colorSelected)
+  }
+}
+
+function showSets() {
+  controlSelectorNav('groupsets')
+  hiddenColorSelectorAndLabel()
+  let selected = bike.groupset ? bike.groupset.id : null
+  $('#container-items').html('')
+  groupsets.forEach((item) => {
+    let selectedClass = item.id === selected ? 'itemSelected' : '';
+    $('#container-items').append(`
+      <button type="button" id="groupset${item.id}" class="border list-group-item list-group-item-action ${selectedClass}" onclick="selectGroupset(${item.id})">
+        <div class="w-100 d-flex justify-content-center">
+          <img style="width: 180px;" class="px-2 py-3" src="${item.components.chainring.image}" alt="">
+        </div>
+        <div class="mt-2 d-flex flex-column-reverse flex-lg-row justify-content-lg-between align-items-lg-end">
+          <span class="cardBrandAndModel fw-bold" style="max-width: 200px;">${item.brand} ${item.model}</span>
+        </div>
+      </button>
+    `)
+  });
+  if(bike.groupset) {
+    selectWheel(bike.groupset.id, false)
   }
 }
 
@@ -326,6 +369,24 @@ function selectFramesetColor(index) {
   drawBike()
 }
 
+function selectGroupset(groupsetId, draw = true) {
+  bike.groupset = groupsets.find((elem) => elem.id === groupsetId)
+  $("button[id^=groupset]").removeClass('itemSelected')
+  $(`#groupset${groupsetId}`).addClass('itemSelected')
+  loadDescriptionItem(bike.groupset.brand, bike.groupset.model)
+  if(draw) drawBike()
+  loadDescriptionModal({
+    type: 'Groupset',
+    brand: bike.groupset.brand,
+    model: bike.groupset.model,
+    description: bike.groupset.description,
+    image: bike.groupset.components.chainring.image
+  })
+  controlBreadcrumbs()
+  controlSelectorNav('groupset')
+  updatePrice()
+}
+
 function selectBars(barsId, draw = true) {
   bike.bar = bars.find((elem) => elem.id === barsId)
   $("button[id^=bars]").removeClass('itemSelected')
@@ -420,20 +481,126 @@ function selectSaddle(saddlesId, draw = true) {
 
 function drawBike() {
   ctx.clearRect(0, 0, canvas.width, canvas.height)
-  drawFrameset()
+  drawGroupset()
 }
 
 function drawFrameset() {
+  ctx.globalCompositeOperation='destination-over';
   const img = new Image()
   img.onload = () => {
     ctx.drawImage(img, 175, 30, 500, img.height * (500/img.width));
     if(bike.bar && !bike.frameset.colors[bike.frameset.colorSelected].hasBar) drawBars()
+    if(bike.groupset) drawBrakeDisk()
     if(bike.saddles) drawSaddle()
     if(bike.wheels) drawWheels()
     if(bike.tyres) drawTyres()
-    
   };
   img.src = bike.frameset.colors[bike.frameset.colorSelected].image
+}
+
+function drawGroupset() {
+  if(bike.groupset) {
+    let colorSelected = bike.frameset.colorSelected
+
+    drawLevers()
+
+    const diverterImage = new Image()
+    diverterImage.onload = () => {
+      ctx.drawImage(
+        diverterImage, 
+        (bike.frameset.colors[colorSelected].anchors.diverter.x * 2 + 175 - (125 * 2)) - ((bike.groupset.components.diverter.anchors.x * 2) * 0.10), 
+        (bike.frameset.colors[colorSelected].anchors.diverter.y * 2 + 30 - (35 * 2)) -  ((bike.groupset.components.diverter.anchors.y * 2) * 0.10), 
+        50, 
+        diverterImage.height * (50/diverterImage.width)
+      )
+      drawCassete()
+    };
+    diverterImage.src = bike.groupset.components.diverter.image
+
+    const chainringImage = new Image()
+    chainringImage.onload = () => {
+      ctx.drawImage(
+        chainringImage, 
+        (bike.frameset.colors[colorSelected].anchors.set.x * 2 + 175 - (125 * 2)) - (bike.groupset.components.chainring.anchors.x * 2) * 0.25, 
+        (bike.frameset.colors[colorSelected].anchors.set.y * 2 + 30 - (35 * 2)) -  (bike.groupset.components.chainring.anchors.y * 2) * 0.25, 
+        125, 
+        chainringImage.height * (125/chainringImage.width)
+      )
+      drawCassete()
+    };
+    chainringImage.src = bike.groupset.components.chainring.image   
+  } else {
+    drawFrameset()
+  }
+}
+
+function drawBrakeDisk() {
+  let colorSelected = bike.frameset.colorSelected
+  const brakeDiskImage = new Image()
+  brakeDiskImage.onload = () => {
+    ctx.drawImage(
+      brakeDiskImage, 
+      (bike.frameset.colors[colorSelected].anchors.frontWheel.x * 2 + 175 - (125 * 2)) - (bike.groupset.components.brakeDisk.anchors.x * 2) * 0.18, 
+      (bike.frameset.colors[colorSelected].anchors.frontWheel.y * 2 + 30 - (35 * 2)) -  (bike.groupset.components.brakeDisk.anchors.y * 2) * 0.18, 
+      90, 
+      brakeDiskImage.height * (90/brakeDiskImage.width)
+    )
+    ctx.drawImage(
+      brakeDiskImage, 
+      (bike.frameset.colors[colorSelected].anchors.backWheel.x * 2 + 175 - (125 * 2)) - (bike.groupset.components.brakeDisk.anchors.x * 2) * 0.18, 
+      (bike.frameset.colors[colorSelected].anchors.backWheel.y * 2 + 30 - (35 * 2)) -  (bike.groupset.components.brakeDisk.anchors.y * 2) * 0.18, 
+      90, 
+      brakeDiskImage.height * (90/brakeDiskImage.width)
+    )
+  };
+  brakeDiskImage.src = bike.groupset.components.brakeDisk.image
+}
+
+function drawCassete() {
+  let colorSelected = bike.frameset.colorSelected
+  const casseteImage = new Image()
+  casseteImage.onload = () => {
+    ctx.drawImage(
+      casseteImage, 
+      (bike.frameset.colors[colorSelected].anchors.backWheel.x * 2 + 175 - (125 * 2)) - (bike.groupset.components.cassete.anchors.x * 2) * 0.16, 
+      (bike.frameset.colors[colorSelected].anchors.backWheel.y * 2 + 30 - (35 * 2)) -  (bike.groupset.components.cassete.anchors.y * 2) * 0.16, 
+      80, 
+      casseteImage.height * (80/casseteImage.width)
+    )
+    drawFrameset()
+  };
+  casseteImage.src = bike.groupset.components.cassete.image
+}
+
+function drawLevers() {
+  let colorSelected = bike.frameset.colorSelected
+  let bar = {
+    x: (bike.frameset.colors[colorSelected].anchors.bar.x * 2 + 175 - (125 * 2)) - (bike.groupset.components.levers.anchors.x * 2) * 0.16, 
+    y: (bike.frameset.colors[colorSelected].anchors.bar.y * 2 + 30 - (35 * 2)) - (bike.groupset.components.levers.anchors.y * 2) * 0.16
+  }
+  if(!bike.frameset.colors[bike.frameset.colorSelected].hasBar) {
+    if(!bike.bar) return
+    bar.x = (bike.frameset.colors[colorSelected].anchors.bar.x * 2 + 175 - (125 * 2)) 
+      - ((bike.bar.anchors.center.x - 125) * 0.4)
+      + ((bike.bar.anchors.levers.x - 125) * 0.4)
+      - (bike.groupset.components.levers.anchors.x * 2) * 0.2
+
+    bar.y = (bike.frameset.colors[colorSelected].anchors.bar.y * 2 + 30 - (35 * 2)) 
+      - ((bike.bar.anchors.center.y - 35) * 0.4)
+      + ((bike.bar.anchors.levers.y - 35) * 0.4)
+      - (bike.groupset.components.levers.anchors.y * 2) * 0.2
+  }
+  const leversImage = new Image()
+  leversImage.onload = () => {
+    ctx.drawImage(
+      leversImage, 
+      bar.x, 
+      bar.y, 
+      100, 
+      leversImage.height * (100/leversImage.width)
+    )
+  };
+  leversImage.src = bike.groupset.components.levers.image
 }
 
 function drawBars() {
@@ -442,8 +609,8 @@ function drawBars() {
   img.onload = () => {
     ctx.drawImage(
       img, 
-      ((bike.frameset.colors[colorSelected].anchors.bar.x * 2 + 175 - (125 * 2)) - (bike.bar.anchors.center.x / 2.5) + 125 / 2.5),
-      ((bike.frameset.colors[colorSelected].anchors.bar.y * 2 + 30 - (35 * 2)) - (bike.bar.anchors.center.y / 2.5) + 35 / 2.5),
+      (bike.frameset.colors[colorSelected].anchors.bar.x * 2 + 175 - (125 * 2)) - ((bike.bar.anchors.center.x - 125) * 0.4),
+      (bike.frameset.colors[colorSelected].anchors.bar.y * 2 + 30 - (35 * 2)) - ((bike.bar.anchors.center.y - 35) * 0.4),
       100, 
       img.height * (100/img.width)
     )
@@ -649,9 +816,9 @@ function loadDescriptionModal({type, brand, model, description, image}) {
 function controlBreadcrumbs() {
   if(bike.frameset) {
     if(bike.frameset.colors[bike.frameset.colorSelected].hasBar) {
-      $(`#navWheels`).removeClass("disabled")
+      $(`#navSet`).removeClass("disabled")
     } else {
-      $(`#navWheels`).addClass("disabled")
+      $(`#navSet`).addClass("disabled")
       $(`#navBars`).removeClass("disabled")
     }
   } else {
@@ -701,6 +868,12 @@ function controlSelectorNav(item) {
       if(bike.frameset && bike.frameset.colors[bike.frameset.colorSelected].hasBar) { 
         funcNext = 'showWheels()'
       }
+      break;
+    case 'groupsets':
+      label = 'GROUPSETS'
+      labelMobile = 'GROUPSETS (2/8)'
+      funcBack = 'showFramesets()'
+      funcNext = 'showWheels()'
       break;
     case 'bar':
       label = 'BARS'

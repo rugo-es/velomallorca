@@ -15,6 +15,7 @@ let frameset = {
       set: {x: false, y: false},
       saddle: {x: false, y: false},
       bar: {x: false, y: false},
+      diverter: {x: false, y: false}
     }
   }]
 };

@@ -43,6 +43,8 @@ function addFramesetColorElements(colorId, colorData = null) {
         <label class="btn btn-sm ${classButtons} mt-1" for="saddle-${colorId}" id="saddleLabel-${colorId}">Sillín</label>
         <input type="radio" class="btn-check" name="anchors-${colorId}" id="bar-${colorId}" autocomplete="off" onclick="changeAnchor('bar')">
         <label class="btn btn-sm ${classButtons} mt-1" for="bar-${colorId}" id="barLabel-${colorId}">Manillar</label>
+        <input type="radio" class="btn-check" name="anchors-${colorId}" id="diverter-${colorId}" autocomplete="off" onclick="changeAnchor('diverter')">
+        <label class="btn btn-sm ${classButtons} mt-1" for="diverter-${colorId}" id="diverterLabel-${colorId}">Desviador</label>
       </div>
       <canvas id="canvas-${colorId}" class="border border-primary mb-3" width="500" height="300"></canvas>
       <div class="row">
@@ -88,6 +90,7 @@ function addFramesetColorElements(colorId, colorData = null) {
             $(`#setLabel-${colorId}`).removeClass('btn-success btn-danger').addClass('btn-dark')
             $(`#saddleLabel-${colorId}`).removeClass('btn-success btn-danger').addClass('btn-dark')
             $(`#barLabel-${colorId}`).removeClass('btn-success btn-danger').addClass('btn-dark')
+            $(`#diverterLabel-${colorId}`).removeClass('btn-success btn-danger').addClass('btn-dark')
             frameset.colors[colorId].anchors.frontWheel.x = false
             frameset.colors[colorId].anchors.frontWheel.y = false
             frameset.colors[colorId].anchors.backWheel.x = false
@@ -98,6 +101,8 @@ function addFramesetColorElements(colorId, colorData = null) {
             frameset.colors[colorId].anchors.saddle.y = false
             frameset.colors[colorId].anchors.bar.x = false
             frameset.colors[colorId].anchors.bar.y = false
+            frameset.colors[colorId].anchors.diverter.x = false
+            frameset.colors[colorId].anchors.diverter.y = false
           }
         });
         xhr.open("POST", "/api/uploadAvatar");
@@ -145,6 +150,7 @@ function addColor() {
       set: {x: false, y: false},
       saddle: {x: false, y: false},
       bar: {x: false, y: false},
+      diverter: {x: false, y: false},
     }
   })
   addFramesetColorElements(colorId)
@@ -168,6 +174,9 @@ function getCursorPosition(event, colorId) {
   const rect = canvas.getBoundingClientRect()
   const x = event.clientX - rect.left
   const y = event.clientY - rect.top
+  if(!frameset.colors[colorId].anchors[anchor]) {
+    frameset.colors[colorId].anchors[anchor] = {x: false, y: false}
+  }
   frameset.colors[colorId].anchors[anchor].x = x; 
   frameset.colors[colorId].anchors[anchor].y = y;
   drawImageAndAnchors(colorId)
@@ -244,7 +253,8 @@ function validateAnchors(colorId) {
     validateAnchor(colorId, 'backWheel'),
     validateAnchor(colorId, 'set'),
     validateAnchor(colorId, 'saddle'),
-    validateAnchor(colorId, 'bar')
+    validateAnchor(colorId, 'bar'),
+    validateAnchor(colorId, 'diverter')
   ]
   return validate.some((e) => !e)
 }
