@@ -27,7 +27,7 @@ jobs:
       - name: rsync deployments
         uses: burnett01/rsync-deployments@5.1
         with:
-          switches: -avzr --delete
+          switches: -avzr --delete --exclude '/app/assets/img/framesets/*' --exclude '/app/assets/img/bars/*' --exclude '/app/assets/img/groupsets/*' --exclude '/app/assets/img/wheels/*' --exclude '/app/assets/img/tyres/*' --exclude '/app/assets/img/seatpots/*' --exclude '/app/assets/img/saddles/*'
           path: ./*
           remote_path: /var/www/node-app/
           remote_host: ec2-18-101-79-0.eu-south-2.compute.amazonaws.com
