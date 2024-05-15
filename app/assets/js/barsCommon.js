@@ -18,6 +18,7 @@ $(document).ready(function(){
             img.src = "/img/bars/"+response.data;
             bar.image = "/img/bars/"+response.data;
             $(`#centerLabel`).removeClass('btn-success btn-danger').addClass('btn-dark')
+            $(`#leversLabel`).removeClass('btn-success btn-danger').addClass('btn-dark')
             bar.anchors.center.x = false
             bar.anchors.center.y = false
             bar.anchors.levers.x = false
@@ -56,12 +57,10 @@ function validateForm() {
   } else {
     $('#image').removeClass("is-invalid").addClass('is-valid');
   }
-  if (!bar.brand || !bar.model || !bar.description 
-    || !bar.price || !bar.image || !bar.shopifyId 
-    || validateAnchor('center') || validateAnchor('levers')) {
-    return true
-  }
-  return false
+  let error = !bar.brand || !bar.model || !bar.description || !bar.price || !bar.image || !bar.shopifyId ? true : false
+  if(validateAnchor('center')) error = true 
+  if(validateAnchor('levers')) error = true
+  return error
 }
 
 function validateInput(inputId) {
