@@ -14,8 +14,10 @@ let wheels = []
 let tyres = []
 let seatpots = []
 let saddles = []
-const canvas = document.getElementById("canvasBuilder");
-const ctx = canvas.getContext("2d");
+const canvas = document.getElementById("canvasBuilder")
+const ctx = canvas.getContext("2d")
+let isLastStep = false
+let isFirstIn = window.location.search ? true : false
 
 $(document).ready(() => {
   getFramesets()
@@ -39,6 +41,7 @@ function getFramesets() {
     .done(function (response) { 
       framesets = response;
       showFramesets()
+      selectLink('fr')
     })
     .fail( function(jqXHR, textStatus, errorThrown){
       console.log(textStatus)
@@ -56,6 +59,7 @@ function getGroupsets() {
   $.ajax(settings)
     .done(function (response) { 
       groupsets = response;
+      selectLink('gr')
     })
     .fail( function(jqXHR, textStatus, errorThrown){
       console.log(textStatus)
@@ -73,6 +77,7 @@ function getWheels() {
   $.ajax(settings)
     .done(function (response) { 
       wheels = response;
+      selectLink('wh')
     })
     .fail( function(jqXHR, textStatus, errorThrown){
       console.log(textStatus)
@@ -90,6 +95,7 @@ function getTyres() {
   $.ajax(settings)
     .done(function (response) { 
       tyres = response;
+      selectLink('ty')
     })
     .fail( function(jqXHR, textStatus, errorThrown){
       console.log(textStatus)
@@ -107,6 +113,7 @@ function getBars() {
   $.ajax(settings)
     .done(function (response) { 
       bars = response;
+      selectLink('ba')
     })
     .fail( function(jqXHR, textStatus, errorThrown){
       console.log(textStatus)
@@ -124,6 +131,7 @@ function getSeatpots() {
   $.ajax(settings)
     .done(function (response) { 
       seatpots = response;
+      selectLink('se')
     })
     .fail( function(jqXHR, textStatus, errorThrown){
       console.log(textStatus)
@@ -141,6 +149,7 @@ function getSaddles() {
   $.ajax(settings)
     .done(function (response) { 
       saddles = response;
+      selectLink('sa')
     })
     .fail( function(jqXHR, textStatus, errorThrown){
       console.log(textStatus)
@@ -157,8 +166,8 @@ function showFramesets() {
     colors += item.colors.length > 3 ? `<span>+${item.colors.length - 3}</span>` : ''
     $('#container-items').append(`
       <button type="button" id="frameset${item.id}" class="border list-group-item list-group-item-action ${selectedClass}" onclick="selectFrameset(${item.id})">
-        <div class="w-100 d-flex justify-content-center">
-          <img style="width: 180px;" class="px-2 py-3" src="${item.colors[0].image}" alt="">
+        <div class="w-100 d-flex justify-content-center" style="min-hei">
+          <img style="height: 140px;" class="px-2 py-3" src="${item.colors[0].image}" alt="">
         </div>
         <div class="mt-2 d-flex flex-column-reverse flex-lg-row justify-content-lg-between align-items-lg-end">
           <span class="cardBrandAndModel fw-bold" style="max-width: 200px;">${item.brand} ${item.model}</span>
@@ -184,7 +193,7 @@ function showSets() {
     $('#container-items').append(`
       <button type="button" id="groupset${item.id}" class="border list-group-item list-group-item-action ${selectedClass}" onclick="selectGroupset(${item.id})">
         <div class="w-100 d-flex justify-content-center">
-          <img style="width: 180px;" class="px-2 py-3" src="${item.components.chainring.image}" alt="">
+          <img style="height: 140px;" class="px-2 py-3" src="${item.components.chainring.image}" alt="">
         </div>
         <div class="mt-2 d-flex flex-column-reverse flex-lg-row justify-content-lg-between align-items-lg-end">
           <span class="cardBrandAndModel fw-bold" style="max-width: 200px;">${item.brand} ${item.model}</span>
@@ -207,7 +216,7 @@ function showBars() {
     $('#container-items').append(`
       <button type="button" id="bars${item.id}" class="border list-group-item list-group-item-action ${selectedClass}" onclick="selectBars(${item.id})">
         <div class="w-100 d-flex justify-content-center">
-          <img style="width: 180px;" class="px-2 py-3" src="${item.image}" alt="">
+          <img style="height: 140px;" class="px-2 py-3" src="${item.image}" alt="">
         </div>
         <div class="mt-2 d-flex flex-column-reverse flex-lg-row justify-content-lg-between align-items-lg-end">
           <span class="cardBrandAndModel fw-bold" style="max-width: 200px;">${item.brand} ${item.model}</span>
@@ -230,7 +239,7 @@ function showWheels() {
     $('#container-items').append(`
       <button type="button" id="wheels${item.id}" class="border list-group-item list-group-item-action ${selectedClass}" onclick="selectWheel(${item.id})">
         <div class="w-100 d-flex justify-content-center">
-          <img style="width: 180px;" class="px-2 py-3" src="${item.image}" alt="">
+          <img style="height: 140px;" class="px-2 py-3" src="${item.image}" alt="">
         </div>
         <div class="mt-2 d-flex flex-column-reverse flex-lg-row justify-content-lg-between align-items-lg-end">
           <span class="cardBrandAndModel fw-bold" style="max-width: 200px;">${item.brand} ${item.model}</span>
@@ -253,7 +262,7 @@ function showTyres() {
     $('#container-items').append(`
       <button type="button" id="tyres${item.id}" class="border list-group-item list-group-item-action ${selectedClass}" onclick="selectTyres(${item.id})">
         <div class="w-100 d-flex justify-content-center">
-          <img style="width: 180px;" class="px-2 py-3" src="${item.image}" alt="">
+          <img style="height: 140px;" class="px-2 py-3" src="${item.image}" alt="">
         </div>
         <div class="mt-2 d-flex flex-column-reverse flex-lg-row justify-content-lg-between align-items-lg-end">
           <span class="cardBrandAndModel fw-bold" style="max-width: 200px;">${item.brand} ${item.model}</span>
@@ -276,7 +285,7 @@ function showSeatpots() {
     $('#container-items').append(`
       <button type="button" id="seatpots${item.id}" class="border list-group-item list-group-item-action ${selectedClass}" onclick="selectSeatpot(${item.id})">
         <div class="w-100 d-flex justify-content-center">
-          <img style="width: 180px;" class="px-2 py-3" src="${item.image}" alt="">
+          <img style="height: 140px;" class="px-2 py-3" src="${item.image}" alt="">
         </div>
         <div class="mt-2 d-flex flex-column-reverse flex-lg-row justify-content-lg-between align-items-lg-end">
           <span class="cardBrandAndModel fw-bold" style="max-width: 200px;">${item.brand} ${item.model}</span>
@@ -298,8 +307,8 @@ function showSaddles() {
     let selectedClass = item.id === selected ? 'itemSelected' : '';
     $('#container-items').append(`
       <button type="button" id="saddles${item.id}" class="border list-group-item list-group-item-action ${selectedClass}" onclick="selectSaddle(${item.id})">
-        <div class="w-100 d-flex justify-content-center">
-          <img style="width: 180px;" class="px-2 py-3" src="${item.image}" alt="">
+        <div class="w-100 d-flex justify-content-center" style="height: 140px;">
+          <img style="height: 80px; max-width: 350px" class="px-2 py-3 mt-4" src="${item.image}" alt="">
         </div>
         <div class="mt-2 d-flex flex-column-reverse flex-lg-row justify-content-lg-between align-items-lg-end">
           <span class="cardBrandAndModel fw-bold" style="max-width: 200px;">${item.brand} ${item.model}</span>
@@ -320,9 +329,7 @@ function selectFrameset(framesetId, draw = true) {
   bike.frameset = framesets.find((elem) => elem.id === framesetId)
   $("button[id^=frameset]").removeClass('itemSelected')
   $(`#frameset${framesetId}`).addClass('itemSelected')
-
   loadDescriptionItem(bike.frameset.brand, bike.frameset.model)
-
   if(bike.frameset.colors.length > 1) {
     let colores = bike.frameset.colors.map((color, index) => {
       let classActive = index === 0 ? 'btnColorSelected': ''
@@ -759,6 +766,7 @@ function resetBike() {
 
   updatePrice()
   showFramesets()
+  let isLastStep = false
 }
 
 function updatePrice() {
@@ -789,8 +797,8 @@ function showDetailsModal() {
       $('#detailsModalContent').append(`
         <div class="col-12 col-lg-6 col-xl-3 mt-2">
           <div class="card mb-3 rounded shadow h-100">
-            <div class="card-header p-0">
-              <img src="${image}" class="w-100 p-5" />
+            <div class="card-header p-0 d-flex justify-content-center" style="max-height: 240px; min-height: 240px; max-width: 100%;">
+              <img src="${image}" style="max-height: 100%; max-width: 100%;" class="p-5 m-auto" />
             </div>
             <div class="card-body d-flex flex-column">
               <span class="fs-3 fw-bold">${bike[key].brand}</span>
@@ -869,6 +877,7 @@ function controlSelectorNav(item) {
   let hasSeatpot = bike.frameset?.colors[bike.frameset.colorSelected].hasSeatpot
   if(hasBar) totalSteps--
   if(hasSeatpot) totalSteps--
+  $selectorNavContinue.text('CONTINUAR')
   switch(item) {
     case 'frameset':
       label = 'FRAMESETS'
@@ -931,10 +940,20 @@ function controlSelectorNav(item) {
       label = 'SADDLES'
       labelMobile = `SADDLE (${step}/${totalSteps})`
       funcBack = 'showSeatpots()'
-      funcNext = 'showSaddles()'
+      funcNext = 'lastStep()'
       if(bike.frameset && bike.frameset.colors[bike.frameset.colorSelected].hasSeatpot) { 
         funcBack = 'showTyres()'
       }
+      break;
+    case 'last':
+      step = 8
+      if(hasBar) step--
+      if(hasSeatpot) step--
+      label = 'BIKE FIT'
+      labelMobile = `BIKE FIT (${step}/${totalSteps})`
+      funcBack = 'showSeatpots()'
+      funcNext = 'lastStep()'
+      $selectorNavContinue.text('IR A LA TIENDA')
       break;
   }
   $selectorNavLabel.text(label)
@@ -954,6 +973,10 @@ function controlSelectorNav(item) {
     $selectorNavNext.addClass("disabled")
     $selectorNavNextMobile.addClass(["invisible", "disabled"])
     $selectorNavContinue.addClass("disabled")
+  }
+  if (!isFirstIn) {
+    window.history.replaceState({}, '', generateLink());
+    isFirstIn = false
   }
 }
 
@@ -983,4 +1006,112 @@ function handlerNavigation() {
   } else {
     $('#navSeatpotsContainer').removeClass('d-none')
   }
+}
+
+function lastStep() {
+  hiddenColorSelectorAndLabel()
+  controlSelectorNav('last')   
+  $('#selectorNavNext').addClass("disabled").attr("onclick", "")
+  $('#selectorNavNextMobile').addClass(["invisible", "disabled"]).attr("onclick", "")
+  $('#selectorNavBack').removeClass("disabled").attr("onclick", "showSaddles()")
+  $('#selectorNavBackMobile').removeClass(["invisible", "disabled"]).attr("onclick", "showSaddles()")
+  $('#selectorNavContinue').removeClass("disabled").attr('onclick', 'GoToShop()')
+  let link = generateLink() 
+  $('#container-items').html(`
+  <div class="border-start border-top p-4 h-100 w-100 d-flex flex-column gap-3 text-center">
+    <h3 class="my-3">TODO LISTO</h3>
+    <div>
+      <p class="mt-2 mb-0">Completa tu compra</p>
+      <a href="">Ir a tienda</a>
+    </div>
+    <div>
+      <p class="mt-2 mb-0">Contacta con nosotros</p>
+      <a href="#">info@velomallorca.com</a>
+    </div>
+    <div>
+      <p class="mt-2 mb-0">Comparte tu diseño</p>
+        <button type="button" class="btn btn-sm btn-primary mx-auto" style="max-width: 120px;" onclick="copyLinkToClipboard()">
+        <span class="me-1">Copiar link</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-copy" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" d="M4 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1h1v1a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1v1z"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+  `)
+}
+
+function generateLink() {
+  let link = window.location.origin
+  for(const [key, value] of Object.entries(bike)) {    
+    if(!bike[key]) continue
+    if(key === 'bar' && bike.frameset.colors[bike.frameset.colorSelected].hasBar) continue
+    if(key === 'seatpots' && bike.frameset.colors[bike.frameset.colorSelected].hasSeatpot) continue
+    if(key === 'frameset') {
+      link += bike[key] ? `?fr=${bike.frameset.id}&fc=${bike.frameset.colorSelected}` : ''
+    } else {
+      link += bike[key] ? `&${key.slice(0, 2)}=${bike[key].id}` : ''
+    }
+  }
+  return link
+}
+
+const isThereParam = (item) => {
+  return window.location.search.search(item) == -1 ? false : true
+}
+
+function getValueLink(param) {
+  let params = window.location.search
+  return param == 'sa' 
+    ? parseInt(params.slice(parseInt(params.search(param)) + 3)) 
+    : parseInt(params.slice(parseInt(params.search(param)) + 3).split('&')[0])
+}
+
+function selectLink(item) {
+  if (!isThereParam(item)) return
+  switch(item) {
+    case 'fr':
+      let framesetId = getValueLink('fr')
+      let framesetColorId = getValueLink('fc')
+      selectFrameset(framesetId, false)
+      selectFramesetColor(framesetColorId)
+      break;
+    case 'ba':
+      selectBars(getValueLink('ba'))
+      showBars()
+      break;
+    case 'gr':
+      selectGroupset(getValueLink('gr'))
+      showSets()
+      break;
+    case 'wh':
+      selectWheel(getValueLink('wh'))
+      showWheels()
+      break;
+    case 'ty':
+      selectTyres(getValueLink('ty'))
+      showTyres()
+      break;
+    case 'se':
+      selectSeatpot(getValueLink('se'))
+      showSeatpots()
+      break;
+    case 'sa':
+      selectSaddle(getValueLink('sa'))
+      lastStep()
+      break;
+  }
+}
+
+function showSharedLink() {
+  $('#sharedModalLink').text(window.location.href)
+  $('#sharedModal').modal('show');
+}
+
+function copyLinkToClipboard() {
+  navigator.clipboard.writeText(generateLink())
+}
+
+function GoToShop() {
+  alert('Ir a la tienda')
 }

@@ -102,7 +102,7 @@
             <path d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466"/>
           </svg>
         </button>
-        <button class="btn btn-primary rounded-pill px-1 py-2">
+        <button class="btn btn-primary rounded-pill px-1 py-2" onclick="showSharedLink()">
           &nbsp;
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-share-fill" viewBox="0 0 16 16">
             <path d="M11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.5 2.5 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5"/>
@@ -145,7 +145,7 @@
         </div>
       </div>
       <div class="flex-lg-grow-1 overflow-auto">
-        <div class="list-group" id="container-items"></div>
+        <div class="list-group h-100" id="container-items"></div>
       </div>
       <div class="">
         <button id="selectorNavContinue" class="btn btn-light w-100 py-3 border disabled d-none d-lg-block" onclick="">
