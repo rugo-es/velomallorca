@@ -23,7 +23,10 @@
     "mysql2": "^2.2.5",
     "nodemailer": "^6.5.0",
     "path": "^0.12.7",
-    "sequelize": "^6.6.2"
+    "pg": "^8.11.5",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.6.2",
+    "sequelize-cockroachdb": "^6.0.5"
   },
   "devDependencies": {
     "nodemon": "^2.0.7"

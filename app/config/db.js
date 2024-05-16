@@ -9,3 +9,13 @@ module.exports = {
   "host": process.env.DB_HOST,
   "dialect": "mysql"
 };
+
+/*
+module.exports =  {
+  url: "postgresql://test:wcaJ2rKmlfxp28t-zBLcrg@test-cluster-1692.j77.cockroachlabs.cloud:26257/test_velomallorca?sslmode=verify-full",
+  dialect: 'postgres',
+  dialectOptions: {
+    ssl: true
+  }
+}
+*/

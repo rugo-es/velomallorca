@@ -8,6 +8,14 @@ const config = require(__dirname + '/../config/db.js');
 const db = {};
 
 let sequelize = new Sequelize(config.database, config.username, config.password, config);
+/*
+const sequelize = new Sequelize(config.url, {
+  dialectOptions: {
+    application_name: "velomallorca_bikebuilder",
+    ssl: true
+  }
+});
+*/
 
 fs
   .readdirSync(__dirname)
