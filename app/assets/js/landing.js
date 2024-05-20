@@ -16,6 +16,7 @@ let seatpots = []
 let saddles = []
 const canvas = document.getElementById("canvasBuilder")
 const ctx = canvas.getContext("2d")
+let bmp;
 let isLastStep = false
 let isFirstIn = window.location.search ? true : false
 
@@ -28,6 +29,16 @@ $(document).ready(() => {
   getSeatpots()
   getSaddles()
 })
+
+document.onvisibilitychange = async(evt) => {
+  if (document.visibilityState === "hidden") {
+    bmp = await createImageBitmap(canvas);
+  } else {
+    ctx.globalCompositeOperation = "copy";
+    ctx.drawImage(bmp, 0, 0);
+    ctx.globalCompositeOperation = "source-over";
+  }
+};
 
 function getFramesets() {
   var settings = {
@@ -165,7 +176,7 @@ function showFramesets() {
     let colors = item.colors.slice(0, 3).map((color, index) => `<span class="badge me-1 border border-1 border-black" style="background-color: ${color.colorCode};">&nbsp;&nbsp;</span>`).join('')
     colors += item.colors.length > 3 ? `<span>+${item.colors.length - 3}</span>` : ''
     $('#container-items').append(`
-      <button type="button" id="frameset${item.id}" class="border list-group-item list-group-item-action ${selectedClass}" onclick="selectFrameset(${item.id})">
+      <button type="button" id="frameset${item.id}" class="border list-group-item list-group-item-action ${selectedClass}" onclick="selectFrameset('${item.id}'); generateLink();">
         <div class="w-100 d-flex justify-content-center" style="min-hei">
           <img style="height: 140px;" class="px-2 py-3" src="${item.colors[0].image}" alt="">
         </div>
@@ -178,7 +189,7 @@ function showFramesets() {
   });
   if(bike.frameset) {
     let colorSelected = bike.frameset.colorSelected
-    selectFrameset(bike.frameset.id, false)
+    selectFrameset(bike.frameset.id.toString(), false)
     selectFramesetColor(colorSelected)
   }
 }
@@ -191,7 +202,7 @@ function showSets() {
   groupsets.forEach((item) => {
     let selectedClass = item.id === selected ? 'itemSelected' : '';
     $('#container-items').append(`
-      <button type="button" id="groupset${item.id}" class="border list-group-item list-group-item-action ${selectedClass}" onclick="selectGroupset(${item.id})">
+      <button type="button" id="groupset${item.id}" class="border list-group-item list-group-item-action ${selectedClass}" onclick="selectGroupset('${item.id}'); generateLink();">
         <div class="w-100 d-flex justify-content-center">
           <img style="height: 140px;" class="px-2 py-3" src="${item.components.chainring.image}" alt="">
         </div>
@@ -214,7 +225,7 @@ function showBars() {
   bars.forEach((item) => {
     let selectedClass = item.id === selected ? 'itemSelected' : '';
     $('#container-items').append(`
-      <button type="button" id="bars${item.id}" class="border list-group-item list-group-item-action ${selectedClass}" onclick="selectBars(${item.id})">
+      <button type="button" id="bars${item.id}" class="border list-group-item list-group-item-action ${selectedClass}" onclick="selectBars('${item.id}'); generateLink();">
         <div class="w-100 d-flex justify-content-center">
           <img style="height: 140px;" class="px-2 py-3" src="${item.image}" alt="">
         </div>
@@ -237,7 +248,7 @@ function showWheels() {
   wheels.forEach((item) => {
     let selectedClass = item.id === selected ? 'itemSelected' : '';
     $('#container-items').append(`
-      <button type="button" id="wheels${item.id}" class="border list-group-item list-group-item-action ${selectedClass}" onclick="selectWheel(${item.id})">
+      <button type="button" id="wheels${item.id}" class="border list-group-item list-group-item-action ${selectedClass}" onclick="selectWheel('${item.id}'); generateLink();">
         <div class="w-100 d-flex justify-content-center">
           <img style="height: 140px;" class="px-2 py-3" src="${item.image}" alt="">
         </div>
@@ -260,7 +271,7 @@ function showTyres() {
   tyres.forEach((item) => {
     let selectedClass = item.id === selected ? 'itemSelected' : '';
     $('#container-items').append(`
-      <button type="button" id="tyres${item.id}" class="border list-group-item list-group-item-action ${selectedClass}" onclick="selectTyres(${item.id})">
+      <button type="button" id="tyres${item.id}" class="border list-group-item list-group-item-action ${selectedClass}" onclick="selectTyres('${item.id}'); generateLink();">
         <div class="w-100 d-flex justify-content-center">
           <img style="height: 140px;" class="px-2 py-3" src="${item.image}" alt="">
         </div>
@@ -283,7 +294,7 @@ function showSeatpots() {
   seatpots.forEach((item) => {
     let selectedClass = item.id === selected ? 'itemSelected' : '';
     $('#container-items').append(`
-      <button type="button" id="seatpots${item.id}" class="border list-group-item list-group-item-action ${selectedClass}" onclick="selectSeatpot(${item.id})">
+      <button type="button" id="seatpots${item.id}" class="border list-group-item list-group-item-action ${selectedClass}" onclick="selectSeatpot('${item.id}'); generateLink();">
         <div class="w-100 d-flex justify-content-center">
           <img style="height: 140px;" class="px-2 py-3" src="${item.image}" alt="">
         </div>
@@ -306,7 +317,7 @@ function showSaddles() {
   saddles.forEach((item) => {
     let selectedClass = item.id === selected ? 'itemSelected' : '';
     $('#container-items').append(`
-      <button type="button" id="saddles${item.id}" class="border list-group-item list-group-item-action ${selectedClass}" onclick="selectSaddle(${item.id})">
+      <button type="button" id="saddles${item.id}" class="border list-group-item list-group-item-action ${selectedClass}" onclick="selectSaddle('${item.id}'); generateLink();">
         <div class="w-100 d-flex justify-content-center" style="height: 140px;">
           <img style="height: 80px; max-width: 350px" class="px-2 py-3 mt-4" src="${item.image}" alt="">
         </div>
@@ -326,7 +337,7 @@ function selectFrameset(framesetId, draw = true) {
     $('#landingNoSelectedFrameset').addClass("d-none")
     $('#containerCanvas').removeClass('d-none')
   }
-  bike.frameset = framesets.find((elem) => elem.id === framesetId)
+  bike.frameset = framesets.find((elem) => elem.id.toString() === framesetId.toString())
   $("button[id^=frameset]").removeClass('itemSelected')
   $(`#frameset${framesetId}`).addClass('itemSelected')
   loadDescriptionItem(bike.frameset.brand, bike.frameset.model)
@@ -377,7 +388,7 @@ function selectFramesetColor(index) {
 }
 
 function selectGroupset(groupsetId, draw = true) {
-  bike.groupset = groupsets.find((elem) => elem.id === groupsetId)
+  bike.groupset = groupsets.find((elem) => elem.id.toString() === groupsetId.toString())
   $("button[id^=groupset]").removeClass('itemSelected')
   $(`#groupset${groupsetId}`).addClass('itemSelected')
   loadDescriptionItem(bike.groupset.brand, bike.groupset.model)
@@ -395,7 +406,7 @@ function selectGroupset(groupsetId, draw = true) {
 }
 
 function selectBars(barsId, draw = true) {
-  bike.bar = bars.find((elem) => elem.id === barsId)
+  bike.bar = bars.find((elem) => elem.id.toString() === barsId.toString())
   $("button[id^=bars]").removeClass('itemSelected')
   $(`#bars${barsId}`).addClass('itemSelected')
   loadDescriptionItem(bike.bar.brand, bike.bar.model)
@@ -413,7 +424,7 @@ function selectBars(barsId, draw = true) {
 }
 
 function selectWheel(wheelsId, draw = true) {
-  bike.wheels = wheels.find((elem) => elem.id === wheelsId)
+  bike.wheels = wheels.find((elem) => elem.id.toString() === wheelsId.toString())
   $("button[id^=wheels]").removeClass('itemSelected')
   $(`#wheels${wheelsId}`).addClass('itemSelected')
   
@@ -433,7 +444,7 @@ function selectWheel(wheelsId, draw = true) {
 }
 
 function selectTyres(tyresId, draw = true) {
-  bike.tyres = tyres.find((elem) => elem.id === tyresId)
+  bike.tyres = tyres.find((elem) => elem.id.toString() === tyresId.toString())
   $("button[id^=tyres]").removeClass('itemSelected')
   $(`#tyres${tyresId}`).addClass('itemSelected')
   loadDescriptionItem(bike.tyres.brand, bike.tyres.model)
@@ -451,7 +462,7 @@ function selectTyres(tyresId, draw = true) {
 }
 
 function selectSeatpot(seatpotsId, draw = true) {
-  bike.seatpots = seatpots.find((elem) => elem.id === seatpotsId)
+  bike.seatpots = seatpots.find((elem) => elem.id.toString() === seatpotsId.toString())
   $("button[id^=seatpots]").removeClass('itemSelected')
   $(`#seatpots${seatpotsId}`).addClass('itemSelected')
   loadDescriptionItem(bike.seatpots.brand, bike.seatpots.model)
@@ -469,7 +480,7 @@ function selectSeatpot(seatpotsId, draw = true) {
 }
 
 function selectSaddle(saddlesId, draw = true) {
-  bike.saddles = saddles.find((elem) => elem.id === saddlesId)
+  bike.saddles = saddles.find((elem) => elem.id.toString() === saddlesId.toString())
   $("button[id^=saddles]").removeClass('itemSelected')
   $(`#saddles${saddlesId}`).addClass('itemSelected')
   loadDescriptionItem(bike.saddles.brand, bike.saddles.model)
@@ -846,6 +857,7 @@ function controlBreadcrumbs() {
     $(`#navSet`).removeClass("disabled")
   }
   if(bike.groupset) {
+    $(`#navSet`).removeClass("disabled")
     $(`#navWheels`).removeClass("disabled")
   }
   if(bike.wheels) {
@@ -859,6 +871,9 @@ function controlBreadcrumbs() {
     }
   }
   if(bike.seatpots) {
+    $(`#navSaddles`).removeClass("disabled")
+  }
+  if(bike.saddles) {
     $(`#navSaddles`).removeClass("disabled")
   }
 }
@@ -1053,6 +1068,7 @@ function generateLink() {
       link += bike[key] ? `&${key.slice(0, 2)}=${bike[key].id}` : ''
     }
   }
+  window.history.replaceState({foo: 'bar'}, '', link);
   return link
 }
 
@@ -1063,8 +1079,8 @@ const isThereParam = (item) => {
 function getValueLink(param) {
   let params = window.location.search
   return param == 'sa' 
-    ? parseInt(params.slice(parseInt(params.search(param)) + 3)) 
-    : parseInt(params.slice(parseInt(params.search(param)) + 3).split('&')[0])
+    ? params.slice(parseInt(params.search(param)) + 3)
+    : params.slice(parseInt(params.search(param)) + 3).split('&')[0]
 }
 
 function selectLink(item) {

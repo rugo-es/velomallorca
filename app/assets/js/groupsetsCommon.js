@@ -1,7 +1,23 @@
+const canvasChainring = document.getElementById(`canvasChainring`);
+const ctxChainring = canvasChainring.getContext("2d");
+let bmpChairing
+const canvasCassete = document.getElementById(`canvasCassete`);
+const ctxCassete = canvasCassete.getContext("2d");
+let bmpCassete
+const canvasBrakeDisk = document.getElementById(`canvasBrakeDisk`);
+const ctxBrakeDisk = canvasBrakeDisk.getContext("2d");
+let bmpBrakeDisk
+const canvasBrakeCaliper = document.getElementById(`canvasBrakeCaliper`);
+const ctxBrakeCaliper = canvasBrakeCaliper.getContext("2d");
+let bmpBrakeCaliper
+const canvasDiverter = document.getElementById(`canvasDiverter`);
+const ctxDiverter = canvasDiverter.getContext("2d");
+let bmpLevers
+const canvasLevers = document.getElementById(`canvasLevers`);
+const ctxLevers = canvasLevers.getContext("2d");
+
 $(document).ready(() => {
   // Listener de chainring
-  const canvasChainring = document.getElementById(`canvasChainring`);
-  const ctxChainring = canvasChainring.getContext("2d");
   document.getElementById(`imageChainring`).addEventListener('change', function(e) {
     $('#containerChainringImage').show();
     if(e.target.files[0]) {
@@ -38,8 +54,6 @@ $(document).ready(() => {
     getCursorPosition(e, 'chainring')
   });
   // listener de cassete
-  const canvasCassete = document.getElementById(`canvasCassete`);
-  const ctxCassete = canvasCassete.getContext("2d");
   document.getElementById(`imageCassete`).addEventListener('change', function(e) {
     $('#containerCasseteImage').show();
     if(e.target.files[0]) {
@@ -76,8 +90,6 @@ $(document).ready(() => {
     getCursorPosition(e, 'cassete')
   });
   // listener de brake disk
-  const canvasBrakeDisk = document.getElementById(`canvasBrakeDisk`);
-  const ctxBrakeDisk = canvasBrakeDisk.getContext("2d");
   document.getElementById(`imageBrakeDisk`).addEventListener('change', function(e) {
     $('#containerBrakeDiskImage').show();
     if(e.target.files[0]) {
@@ -114,8 +126,6 @@ $(document).ready(() => {
     getCursorPosition(e, 'brakeDisk')
   });
   // listener de brake caliper
-  const canvasBrakeCaliper = document.getElementById(`canvasBrakeCaliper`);
-  const ctxBrakeCaliper = canvasBrakeCaliper.getContext("2d");
   document.getElementById(`imageBrakeCaliper`).addEventListener('change', function(e) {
     $('#containerBrakeCaliperImage').show();
     if(e.target.files[0]) {
@@ -152,8 +162,6 @@ $(document).ready(() => {
     getCursorPosition(e, 'brakeCaliper')
   });
   // listener de diverter
-  const canvasDiverter = document.getElementById(`canvasDiverter`);
-  const ctxDiverter = canvasDiverter.getContext("2d");
   document.getElementById(`imageDiverter`).addEventListener('change', function(e) {
     $('#containerDiverterImage').show();
     if(e.target.files[0]) {
@@ -190,8 +198,6 @@ $(document).ready(() => {
     getCursorPosition(e, 'diverter')
   });
   // listener de levers
-  const canvasLevers = document.getElementById(`canvasLevers`);
-  const ctxLevers = canvasLevers.getContext("2d");
   document.getElementById(`imageLevers`).addEventListener('change', function(e) {
     $('#containerLeversImage').show();
     if(e.target.files[0]) {
@@ -228,6 +234,41 @@ $(document).ready(() => {
     getCursorPosition(e, 'levers')
   });
 })
+
+document.onvisibilitychange = async(evt) => {
+  if (document.visibilityState === "hidden") {
+    bmpChairing = await createImageBitmap(canvasChainring);
+    bmpCassete = await createImageBitmap(canvasCassete);
+    bmpBrakeDisk = await createImageBitmap(canvasBrakeDisk);
+    bmpBrakeCaliper = await createImageBitmap(canvasBrakeCaliper);
+    bmpDiverter = await createImageBitmap(canvasDiverter);
+    bmpLevers = await createImageBitmap(canvasLevers);
+  } else {
+    ctxChainring.globalCompositeOperation = "copy";
+    ctxChainring.drawImage(bmpChairing, 0, 0);
+    ctxChainring.globalCompositeOperation = "source-over";
+
+    ctxCassete.globalCompositeOperation = "copy";
+    ctxCassete.drawImage(bmpCassete, 0, 0);
+    ctxCassete.globalCompositeOperation = "source-over";
+
+    ctxBrakeDisk.globalCompositeOperation = "copy";
+    ctxBrakeDisk.drawImage(bmpBrakeDisk, 0, 0);
+    ctxBrakeDisk.globalCompositeOperation = "source-over";
+
+    ctxBrakeCaliper.globalCompositeOperation = "copy";
+    ctxBrakeCaliper.drawImage(bmpBrakeCaliper, 0, 0);
+    ctxBrakeCaliper.globalCompositeOperation = "source-over";
+
+    ctxDiverter.globalCompositeOperation = "copy";
+    ctxDiverter.drawImage(bmpDiverter, 0, 0);
+    ctxDiverter.globalCompositeOperation = "source-over";
+
+    ctxLevers.globalCompositeOperation = "copy";
+    ctxLevers.drawImage(bmpLevers, 0, 0);
+    ctxLevers.globalCompositeOperation = "source-over";
+  }
+};
 
 function drawImageAndAnchors(item) {
   const canvas = document.getElementById(`canvas${capitalize(item)}`);

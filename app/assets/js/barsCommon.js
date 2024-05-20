@@ -1,3 +1,7 @@
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+let bmp;
+
 $(document).ready(function(){
   document.getElementById('image').addEventListener('change', function(e) {
     if(e.target.files[0]) {
@@ -33,12 +37,20 @@ $(document).ready(function(){
       }
     }
   });
-  const canvas = document.getElementById("canvas");
-  const ctx = canvas.getContext("2d");
   canvas.addEventListener('mousedown', function(e) {
     getCursorPosition(e)
   })
 })
+
+document.onvisibilitychange = async(evt) => {
+  if (document.visibilityState === "hidden") {
+    bmp = await createImageBitmap(canvas);
+  } else {
+    ctx.globalCompositeOperation = "copy";
+    ctx.drawImage(bmp, 0, 0);
+    ctx.globalCompositeOperation = "source-over";
+  }
+};
 
 function showMessageModal(label, text, actionBtn = null) {
   $('#messageModalLabel').text(label)
@@ -92,8 +104,6 @@ function getCursorPosition(event) {
     showMessageModal('ERROR', 'Selecciona un punto de anclaje')
     return;
   }
-  const canvas = document.getElementById(`canvas`);
-  const ctx = canvas.getContext("2d");
   const rect = canvas.getBoundingClientRect()
   const x = event.clientX - rect.left
   const y = event.clientY - rect.top
@@ -109,8 +119,6 @@ function getCursorPosition(event) {
 }
 
 function drawImageAndAnchors() {
-  const canvas = document.getElementById(`canvas`);
-  const ctx = canvas.getContext("2d");
   ctx.clearRect(0, 0, canvas.width, canvas.height)
   const img = new Image();
   img.onload = () => {

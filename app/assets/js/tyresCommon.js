@@ -1,3 +1,7 @@
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+let bmp
+
 $(document).ready(function(){
   document.getElementById('image').addEventListener('change', function(e) {
     if(e.target.files[0]) {
@@ -30,12 +34,20 @@ $(document).ready(function(){
       }
     }
   });
-  const canvas = document.getElementById("canvas");
-  const ctx = canvas.getContext("2d");
   canvas.addEventListener('mousedown', function(e) {
     getCursorPosition(e)
   })
 })
+
+document.onvisibilitychange = async(evt) => {
+  if (document.visibilityState === "hidden") {
+    bmp = await createImageBitmap(canvas);
+  } else {
+    ctx.globalCompositeOperation = "copy";
+    ctx.drawImage(bmp, 0, 0);
+    ctx.globalCompositeOperation = "source-over";
+  }
+};
 
 function showMessageModal(label, text, actionBtn = null) {
   $('#messageModalLabel').text(label)

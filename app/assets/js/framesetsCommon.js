@@ -115,9 +115,19 @@ function addFramesetColorElements(colorId, colorData = null) {
   });
   const canvas = document.getElementById(`canvas-${colorId}`);
   const ctx = canvas.getContext("2d");
+  let bmp
   canvas.addEventListener('mousedown', function(e) {
     getCursorPosition(e, colorId)
   });
+  document.onvisibilitychange = async(evt) => {
+    if (document.visibilityState === "hidden") {
+      bmp = await createImageBitmap(canvas);
+    } else {
+      ctx.globalCompositeOperation = "copy";
+      ctx.drawImage(bmp, 0, 0);
+      ctx.globalCompositeOperation = "source-over";
+    }
+  };
 }
 
 function drawImageAndAnchors(colorId) {
