@@ -1031,13 +1031,13 @@ function lastStep() {
   $('#selectorNavBack').removeClass("disabled").attr("onclick", "showSaddles()")
   $('#selectorNavBackMobile').removeClass(["invisible", "disabled"]).attr("onclick", "showSaddles()")
   $('#selectorNavContinue').removeClass("disabled").attr('onclick', 'GoToShop()')
-  let link = generateLink() 
+  let shopifyLink = generateShopifyLink() 
   $('#container-items').html(`
   <div class="border-start border-top p-4 h-100 w-100 d-flex flex-column gap-3 text-center">
     <h3 class="my-3">TODO LISTO</h3>
     <div>
       <p class="mt-2 mb-0">Completa tu compra</p>
-      <a href="">Ir a tienda</a>
+      <a href="${shopifyLink}" target="_blank">Ir a tienda</a>
     </div>
     <div>
       <p class="mt-2 mb-0">Contacta con nosotros</p>
@@ -1128,6 +1128,25 @@ function copyLinkToClipboard() {
   navigator.clipboard.writeText(generateLink())
 }
 
-function GoToShop() {
-  alert('Ir a la tienda')
+function generateShopifyLink() {
+  let link = 'https://velomallorca.net/cart/'
+  for(const [key, value] of Object.entries(bike)) {    
+    if(!bike[key]) continue
+    if(key === 'bar' && bike.frameset.colors[bike.frameset.colorSelected].hasBar) continue
+    if(key === 'seatpots' && bike.frameset.colors[bike.frameset.colorSelected].hasSeatpot) continue
+    if(key === 'frameset') {
+      link += bike[key] ? `${bike[key].colors[bike.frameset.colorSelected].shopifyId}:1,` : ''
+    } else if(key === 'groupset') {
+      link += bike[key] ? `${bike[key].components.brakeCaliper.shopifyId}:1,` : ''
+      link += bike[key] ? `${bike[key].components.brakeDisk.shopifyId}:1,` : ''
+      link += bike[key] ? `${bike[key].components.cassete.shopifyId}:1,` : ''
+      link += bike[key] ? `${bike[key].components.chainring.shopifyId}:1,` : ''
+      link += bike[key] ? `${bike[key].components.diverter.shopifyId}:1,` : ''
+      link += bike[key] ? `${bike[key].components.levers.shopifyId}:1,` : ''
+    } else {
+      link += bike[key] ? `${bike[key].shopifyId}:1,` : ''
+    }
+  }
+  link = `${link.slice(0, -1)}?storefront=true`
+  return link
 }
