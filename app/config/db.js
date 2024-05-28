@@ -1,7 +1,18 @@
 "use strict"
 
-require('dotenv').config(); 
+if(process.env != 'production') {
+  require('dotenv').config();
+}
 
+module.exports =  {
+  url: process.env.DB_POSTGRES_URL,
+  dialect: 'postgres',
+  dialectOptions: {
+    ssl: true
+  }
+}
+
+// Configuración para mysql
 /*
 module.exports = {
   "username": process.env.DB_USER,
@@ -11,10 +22,3 @@ module.exports = {
   "dialect": "mysql"
 };
 */
-module.exports =  {
-  url: process.env.DB_POSTGRES_URL,
-  dialect: 'postgres',
-  dialectOptions: {
-    ssl: true
-  }
-}

@@ -1,6 +1,5 @@
 "use strict"
 
-require('dotenv').config()
 const nodemailer = require("nodemailer")
 const Mustache = require('mustache')
 const path = require('path')

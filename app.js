@@ -1,6 +1,8 @@
 "use strict"
 
-require('dotenv').config(); 
+if(process.env != 'production') {
+  require('dotenv').config();
+}
 const express = require('express')
 const bodyParser = require('body-parser')
 const path = require('path')
@@ -10,7 +12,7 @@ const mustacheExpress = require('mustache-express')
 // const moment = require('moment')
 
 const app = express()
-const port = 3000
+const port = process.env.PORT || 3000;
 
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())

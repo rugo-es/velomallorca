@@ -6,9 +6,6 @@ const Sequelize = require('sequelize');
 const basename = path.basename(__filename);
 const config = require(__dirname + '/../config/db.js');
 const db = {};
-/*
-let sequelize = new Sequelize(config.database, config.username, config.password, config);
-*/
 const sequelize = new Sequelize(config.url, {
   dialectOptions: {
     application_name: "velomallorca_bikebuilder",
@@ -16,6 +13,10 @@ const sequelize = new Sequelize(config.url, {
   }
 });
 
+// Configuración para mysql
+/*
+let sequelize = new Sequelize(config.database, config.username, config.password, config);
+*/
 
 fs
   .readdirSync(__dirname)
