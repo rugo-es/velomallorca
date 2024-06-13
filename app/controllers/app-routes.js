@@ -17,7 +17,7 @@ function framesets(req, res){
       cdn.js.bootstrap.bundle, 
       cdn.js.datatable,
       cdn.js.datatableBootstrap,
-      '/js/framesets.js',
+      '/js/framesets/framesets.js',
       '/js/app.js' 
     ]
   })
@@ -36,8 +36,8 @@ function framesetsAdd(req, res){
       cdn.js.jquery,  
       cdn.js.bootstrap.bundle, 
       '/js/alerts.js',
-      '/js/framesetsCommon.js',
-      '/js/framesetsAdd.js',
+      '/js/framesets/framesetsCommon.js',
+      '/js/framesets/framesetsAdd.js',
       '/js/app.js' 
     ]
   })
@@ -56,13 +56,12 @@ function framesetsEdit(req, res) {
       cdn.js.jquery,  
       cdn.js.bootstrap.bundle, 
       '/js/alerts.js',
-      '/js/framesetsCommon.js',
-      '/js/framesetsEdit.js',
+      '/js/framesets/framesetsCommon.js',
+      '/js/framesets/framesetsEdit.js',
       '/js/app.js' 
     ],
   })
 }
-
 
 function groupsets(req, res){
   res.render('groupsets', {
@@ -79,7 +78,7 @@ function groupsets(req, res){
       cdn.js.bootstrap.bundle, 
       cdn.js.datatable,
       cdn.js.datatableBootstrap,
-      '/js/groupsets.js',
+      '/js/groupsets/groupsets.js',
       '/js/app.js' 
     ]
   })
@@ -98,8 +97,8 @@ function groupsetsAdd(req, res){
       cdn.js.jquery,  
       cdn.js.bootstrap.bundle, 
       '/js/alerts.js',
-      '/js/groupsetsCommon.js',
-      '/js/groupsetsAdd.js',
+      '/js/groupsets/groupsetsCommon.js',
+      '/js/groupsets/groupsetsAdd.js',
       '/js/app.js' 
     ]
   })
@@ -118,8 +117,8 @@ function groupsetsEdit(req, res) {
       cdn.js.jquery,  
       cdn.js.bootstrap.bundle, 
       '/js/alerts.js',
-      '/js/groupsetsCommon.js',
-      '/js/groupsetsEdit.js',
+      '/js/groupsets/groupsetsCommon.js',
+      '/js/groupsets/groupsetsEdit.js',
       '/js/app.js' 
     ],
   })
@@ -140,7 +139,7 @@ function wheels(req, res){
       cdn.js.bootstrap.bundle, 
       cdn.js.datatable,
       cdn.js.datatableBootstrap,
-      '/js/wheels.js',
+      '/js/wheels/wheels.js',
       '/js/app.js' 
     ]
   })
@@ -159,8 +158,8 @@ function wheelsAdd(req, res){
       cdn.js.jquery,  
       cdn.js.bootstrap.bundle, 
       '/js/alerts.js',
-      '/js/wheelsCommon.js',
-      '/js/wheelsAdd.js',
+      '/js/wheels/wheelsCommon.js',
+      '/js/wheels/wheelsAdd.js',
       '/js/app.js' 
     ]
   })
@@ -179,8 +178,8 @@ function wheelsEdit(req, res) {
       cdn.js.jquery,  
       cdn.js.bootstrap.bundle, 
       '/js/alerts.js',
-      '/js/wheelsCommon.js',
-      '/js/wheelsEdit.js',
+      '/js/wheels/wheelsCommon.js',
+      '/js/wheels/wheelsEdit.js',
       '/js/app.js' 
     ],
   })
@@ -201,7 +200,7 @@ function tyres(req, res){
       cdn.js.bootstrap.bundle, 
       cdn.js.datatable,
       cdn.js.datatableBootstrap,
-      '/js/tyres.js',
+      '/js/tyres/tyres.js',
       '/js/app.js' 
     ]
   })
@@ -220,8 +219,8 @@ function tyresAdd(req, res){
       cdn.js.jquery,  
       cdn.js.bootstrap.bundle, 
       '/js/alerts.js',
-      '/js/tyresCommon.js',
-      '/js/tyresAdd.js',
+      '/js/tyres/tyresCommon.js',
+      '/js/tyres/tyresAdd.js',
       '/js/app.js' 
     ]
   })
@@ -240,8 +239,8 @@ function tyresEdit(req, res) {
       cdn.js.jquery,  
       cdn.js.bootstrap.bundle, 
       '/js/alerts.js',
-      '/js/tyresCommon.js',
-      '/js/tyresEdit.js',
+      '/js/tyres/tyresCommon.js',
+      '/js/tyres/tyresEdit.js',
       '/js/app.js' 
     ],
   })
@@ -262,7 +261,7 @@ function bars(req, res){
       cdn.js.bootstrap.bundle, 
       cdn.js.datatable,
       cdn.js.datatableBootstrap,
-      '/js/bars.js',
+      '/js/bars/bars.js',
       '/js/app.js' 
     ]
   })
@@ -281,8 +280,8 @@ function barsAdd(req, res){
       cdn.js.jquery,  
       cdn.js.bootstrap.bundle, 
       '/js/alerts.js',
-      '/js/barsCommon.js',
-      '/js/barsAdd.js',
+      '/js/bars/barsCommon.js',
+      '/js/bars/barsAdd.js',
       '/js/app.js' 
     ]
   })
@@ -301,8 +300,8 @@ function barsEdit(req, res) {
       cdn.js.jquery,  
       cdn.js.bootstrap.bundle, 
       '/js/alerts.js',
-      '/js/barsCommon.js',
-      '/js/barsEdit.js',
+      '/js/bars/barsCommon.js',
+      '/js/bars/barsEdit.js',
       '/js/app.js' 
     ],
   })
@@ -323,7 +322,7 @@ function seatpots(req, res){
       cdn.js.bootstrap.bundle, 
       cdn.js.datatable,
       cdn.js.datatableBootstrap,
-      '/js/seatpots.js',
+      '/js/seatpots/seatpots.js',
       '/js/app.js' 
     ]
   })
@@ -342,8 +341,8 @@ function seatpotsAdd(req, res){
       cdn.js.jquery,  
       cdn.js.bootstrap.bundle, 
       '/js/alerts.js',
-      '/js/seatpotsCommon.js',
-      '/js/seatpotsAdd.js',
+      '/js/seatpots/seatpotsCommon.js',
+      '/js/seatpots/seatpotsAdd.js',
       '/js/app.js' 
     ]
   })
@@ -362,8 +361,8 @@ function seatpotsEdit(req, res) {
       cdn.js.jquery,  
       cdn.js.bootstrap.bundle, 
       '/js/alerts.js',
-      '/js/seatpotsCommon.js',
-      '/js/seatpotsEdit.js',
+      '/js/seatpots/seatpotsCommon.js',
+      '/js/seatpots/seatpotsEdit.js',
       '/js/app.js' 
     ],
   })
@@ -384,7 +383,7 @@ function saddles(req, res){
       cdn.js.bootstrap.bundle, 
       cdn.js.datatable,
       cdn.js.datatableBootstrap,
-      '/js/saddles.js',
+      '/js/saddles/saddles.js',
       '/js/app.js' 
     ]
   })
@@ -403,8 +402,8 @@ function saddlesAdd(req, res){
       cdn.js.jquery,  
       cdn.js.bootstrap.bundle, 
       '/js/alerts.js',
-      '/js/saddlesCommon.js',
-      '/js/saddlesAdd.js',
+      '/js/saddles/saddlesCommon.js',
+      '/js/saddles/saddlesAdd.js',
       '/js/app.js' 
     ]
   })
@@ -423,8 +422,8 @@ function saddlesEdit(req, res) {
       cdn.js.jquery,  
       cdn.js.bootstrap.bundle, 
       '/js/alerts.js',
-      '/js/saddlesCommon.js',
-      '/js/saddlesEdit.js',
+      '/js/saddles/saddlesCommon.js',
+      '/js/saddles/saddlesEdit.js',
       '/js/app.js' 
     ],
   })
