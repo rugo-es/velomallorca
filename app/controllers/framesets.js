@@ -47,9 +47,11 @@ function update(req, res) {
       Frameset.update(req.body, { where: { id: frameset.id }}).then(() => {
         res.json(frameset)
       }).catch(err => {
+        console.log(err)
         res.status(400).send({error: true, message: 'Bad Request', data: err.errors})
       })  
     }).catch(err => {
+      console.log(err)
       res.status(400).send({error: true, message: 'Bad Request', data: err.errors})
     })
   } catch (err){

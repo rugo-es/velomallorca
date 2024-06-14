@@ -59,7 +59,7 @@ function editFrameset(data) {
     "data": framesetJson
   };
   $.ajax(settings)
-    .done(function (response) { 
+    .done(function (response) {
       location.href = "/app/framesets"
     })
     .fail(function (jqXHR, textStatus, errorThrown) {

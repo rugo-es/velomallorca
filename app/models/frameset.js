@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
   Frameset.init({
     brand: DataTypes.STRING,
     model: DataTypes.STRING,
-    description: DataTypes.STRING,
+    description: DataTypes.STRING(1024),
     price: DataTypes.NUMBER,
     colors: DataTypes.JSON,
     active: DataTypes.BOOLEAN
