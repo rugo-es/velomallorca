@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
   Groupsets.init({
     brand: DataTypes.STRING,
     model: DataTypes.STRING,
-    description: DataTypes.STRING,
+    description: DataTypes.STRING(1024),
     price: DataTypes.NUMBER,
     components: DataTypes.JSON,
     active: DataTypes.BOOLEAN
