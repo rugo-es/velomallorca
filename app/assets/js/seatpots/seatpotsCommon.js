@@ -19,7 +19,7 @@ $(document).ready(function() {
             img.onload = () => {
               ctx.drawImage(img, 0, 0, img.width * (300/img.height), 300);
             };
-            img.src = esponse.data;
+            img.src = response.data;
             seatpot.image = response.data;
             $(`#centerLabel`).removeClass('btn-success btn-danger').addClass('btn-dark')
             seatpot.anchors.center.x = false
