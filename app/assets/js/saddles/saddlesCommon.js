@@ -8,7 +8,7 @@ $(document).ready(function(){
       try {
         let file = $("#image")[0].files[0]
         var data = new FormData();
-        data.append("avatar", file);
+        data.append("image", file);
         var xhr = new XMLHttpRequest();
         xhr.withCredentials = true;
         xhr.addEventListener("readystatechange", function() {
@@ -19,15 +19,15 @@ $(document).ready(function(){
             img.onload = () => {
               ctx.drawImage(img, 125, 35, 250, img.height * (250/img.width));
             };
-            img.src = "/img/saddles/"+response.data;
-            saddle.image = "/img/saddles/"+response.data;
+            img.src = response.data;
+            saddle.image = response.data;
             $(`#centerLabel`).removeClass('btn-success btn-danger').addClass('btn-dark')
             saddle.anchors.center.x = false
             saddle.anchors.center.y = false
           }
         });
-        xhr.open("POST", "/api/uploadAvatar");
-        xhr.setRequestHeader("Directory", "saddles");
+        xhr.open("POST", "/api/uploadImage");
+        // xhr.setRequestHeader("Directory", "saddles");
         xhr.send(data)
       } catch(e) {
         console.log(e)

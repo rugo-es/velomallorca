@@ -8,7 +8,7 @@ $(document).ready(function(){
       try {
         let file = $("#image")[0].files[0]
         var data = new FormData();
-        data.append("avatar", file);
+        data.append("image", file);
         var xhr = new XMLHttpRequest();
         xhr.withCredentials = true;
         xhr.addEventListener("readystatechange", function() {
@@ -19,8 +19,8 @@ $(document).ready(function(){
             img.onload = () => {
               ctx.drawImage(img, 125, 35, 250, img.height * (250/img.width));
             };
-            img.src = "/img/bars/"+response.data;
-            bar.image = "/img/bars/"+response.data;
+            img.src = response.data;
+            bar.image = response.data;
             $(`#centerLabel`).removeClass('btn-success btn-danger').addClass('btn-dark')
             $(`#leversLabel`).removeClass('btn-success btn-danger').addClass('btn-dark')
             bar.anchors.center.x = false
@@ -29,8 +29,8 @@ $(document).ready(function(){
             bar.anchors.levers.y = false
           }
         });
-        xhr.open("POST", "/api/uploadAvatar");
-        xhr.setRequestHeader("Directory", "bars");
+        xhr.open("POST", "/api/uploadImage");
+        // xhr.setRequestHeader("Directory", "bars");
         xhr.send(data)
       } catch(e) {
         console.log(e)

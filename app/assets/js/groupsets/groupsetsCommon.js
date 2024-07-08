@@ -24,7 +24,7 @@ $(document).ready(() => {
       try {
         let file = $(`#imageChainring`)[0].files[0]
         var data = new FormData();
-        data.append("avatar", file);
+        data.append("image", file);
         var xhr = new XMLHttpRequest();
         xhr.withCredentials = true;
         xhr.addEventListener("readystatechange", function() {
@@ -35,15 +35,15 @@ $(document).ready(() => {
             img.onload = () => {
               ctxChainring.drawImage(img, 0, 0, 250, img.height * (250/img.width));
             };
-            img.src = `/img/groupsets/${response.data}`;
-            groupset.components.chainring.image = `/img/groupsets/${response.data}`;;
+            img.src = response.data;
+            groupset.components.chainring.image = response.data;
             $(`#chainringLabel`).removeClass('btn-success btn-danger').addClass('btn-dark')
             groupset.components.chainring.anchors.x = false
             groupset.components.chainring.anchors.y = false
           }
         });
-        xhr.open("POST", "/api/uploadAvatar");
-        xhr.setRequestHeader("Directory", "groupsets");
+        xhr.open("POST", "/api/uploadImage");
+        // xhr.setRequestHeader("Directory", "groupsets");
         xhr.send(data)
       } catch(e) {
         console.log(e)
@@ -60,7 +60,7 @@ $(document).ready(() => {
       try {
         let file = $(`#imageCassete`)[0].files[0]
         var data = new FormData();
-        data.append("avatar", file);
+        data.append("image", file);
         var xhr = new XMLHttpRequest();
         xhr.withCredentials = true;
         xhr.addEventListener("readystatechange", function() {
@@ -71,15 +71,15 @@ $(document).ready(() => {
             img.onload = () => {
               ctxCassete.drawImage(img, 0, 0, 250, img.height * (250/img.width));
             };
-            img.src = `/img/groupsets/${response.data}`;
-            groupset.components.cassete.image = `/img/groupsets/${response.data}`;
+            img.src = response.data;
+            groupset.components.cassete.image = response.data;
             $(`#casseteLabel`).removeClass('btn-success btn-danger').addClass('btn-dark')
             groupset.components.cassete.anchors.x = false
             groupset.components.cassete.anchors.y = false
           }
         });
-        xhr.open("POST", "/api/uploadAvatar");
-        xhr.setRequestHeader("Directory", "groupsets");
+        xhr.open("POST", "/api/uploadImage");
+        // xhr.setRequestHeader("Directory", "groupsets");
         xhr.send(data)
       } catch(e) {
         console.log(e)
@@ -96,7 +96,7 @@ $(document).ready(() => {
       try {
         let file = $(`#imageBrakeDisk`)[0].files[0]
         var data = new FormData();
-        data.append("avatar", file);
+        data.append("image", file);
         var xhr = new XMLHttpRequest();
         xhr.withCredentials = true;
         xhr.addEventListener("readystatechange", function() {
@@ -107,15 +107,15 @@ $(document).ready(() => {
             img.onload = () => {
               ctxBrakeDisk.drawImage(img, 0, 0, 250, img.height * (250/img.width));
             };
-            img.src = `/img/groupsets/${response.data}`;
-            groupset.components.brakeDisk.image = `/img/groupsets/${response.data}`;;
+            img.src = response.data;
+            groupset.components.brakeDisk.image = response.data;
             $(`#brakeDiskLabel`).removeClass('btn-success btn-danger').addClass('btn-dark')
             groupset.components.brakeDisk.anchors.x = false
             groupset.components.brakeDisk.anchors.y = false
           }
         });
-        xhr.open("POST", "/api/uploadAvatar");
-        xhr.setRequestHeader("Directory", "groupsets");
+        xhr.open("POST", "/api/uploadImage");
+        // xhr.setRequestHeader("Directory", "groupsets");
         xhr.send(data)
       } catch(e) {
         console.log(e)
@@ -132,7 +132,7 @@ $(document).ready(() => {
       try {
         let file = $(`#imageBrakeCaliper`)[0].files[0]
         var data = new FormData();
-        data.append("avatar", file);
+        data.append("image", file);
         var xhr = new XMLHttpRequest();
         xhr.withCredentials = true;
         xhr.addEventListener("readystatechange", function() {
@@ -143,15 +143,15 @@ $(document).ready(() => {
             img.onload = () => {
               ctxBrakeCaliper.drawImage(img, 0, 0, 250, img.height * (250/img.width));
             };
-            img.src = `/img/groupsets/${response.data}`;
-            groupset.components.brakeCaliper.image = `/img/groupsets/${response.data}`;;
+            img.src = response.data;
+            groupset.components.brakeCaliper.image = response.data;
             $(`#brakeCaliperLabel`).removeClass('btn-success btn-danger').addClass('btn-dark')
             groupset.components.brakeCaliper.anchors.x = false
             groupset.components.brakeCaliper.anchors.y = false
           }
         });
-        xhr.open("POST", "/api/uploadAvatar");
-        xhr.setRequestHeader("Directory", "groupsets");
+        xhr.open("POST", "/api/uploadImage");
+        // xhr.setRequestHeader("Directory", "groupsets");
         xhr.send(data)
       } catch(e) {
         console.log(e)
@@ -168,7 +168,7 @@ $(document).ready(() => {
       try {
         let file = $(`#imageDiverter`)[0].files[0]
         var data = new FormData();
-        data.append("avatar", file);
+        data.append("image", file);
         var xhr = new XMLHttpRequest();
         xhr.withCredentials = true;
         xhr.addEventListener("readystatechange", function() {
@@ -179,15 +179,15 @@ $(document).ready(() => {
             img.onload = () => {
               ctxDiverter.drawImage(img, 0, 0, 250, img.height * (250/img.width));
             };
-            img.src = `/img/groupsets/${response.data}`;
-            groupset.components.diverter.image = `/img/groupsets/${response.data}`;;
+            img.src = response.data;
+            groupset.components.diverter.image = response.data;
             $(`#diverterLabel`).removeClass('btn-success btn-danger').addClass('btn-dark')
             groupset.components.diverter.anchors.x = false
             groupset.components.diverter.anchors.y = false
           }
         });
-        xhr.open("POST", "/api/uploadAvatar");
-        xhr.setRequestHeader("Directory", "groupsets");
+        xhr.open("POST", "/api/uploadImage");
+        // xhr.setRequestHeader("Directory", "groupsets");
         xhr.send(data)
       } catch(e) {
         console.log(e)
@@ -204,7 +204,7 @@ $(document).ready(() => {
       try {
         let file = $(`#imageLevers`)[0].files[0]
         var data = new FormData();
-        data.append("avatar", file);
+        data.append("image", file);
         var xhr = new XMLHttpRequest();
         xhr.withCredentials = true;
         xhr.addEventListener("readystatechange", function() {
@@ -215,15 +215,15 @@ $(document).ready(() => {
             img.onload = () => {
               ctxLevers.drawImage(img, 0, 0, 250, img.height * (250/img.width));
             };
-            img.src = `/img/groupsets/${response.data}`;
-            groupset.components.levers.image = `/img/groupsets/${response.data}`;;
+            img.src = response.data;
+            groupset.components.levers.image = response.data;
             $(`#leversLabel`).removeClass('btn-success btn-danger').addClass('btn-dark')
             groupset.components.levers.anchors.x = false
             groupset.components.levers.anchors.y = false
           }
         });
-        xhr.open("POST", "/api/uploadAvatar");
-        xhr.setRequestHeader("Directory", "groupsets");
+        xhr.open("POST", "/api/uploadImage");
+        // xhr.setRequestHeader("Directory", "groupsets");
         xhr.send(data)
       } catch(e) {
         console.log(e)

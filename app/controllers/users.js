@@ -2,8 +2,7 @@
 
 const bcrypt = require('bcrypt')
 const moment = require('moment')
-const path = require('path')
-const multer  = require('multer')
+const cloudinary = require('cloudinary').v2;
 
 const mailer = require('../config/mail')
 const jwt = require('../config/jwt')
@@ -11,7 +10,7 @@ const jwt = require('../config/jwt')
 const models = require('../models')
 const User = models.User;
 
-function getAll(req, res){
+function getAll(req, res) {
   try{
     User.findAll({where: req.body}).then(users => {
       res.json(users)
@@ -24,7 +23,7 @@ function getAll(req, res){
   
 }
 
-function getById(req, res){
+function getById(req, res) {
   try{
     User.findByPk(req.params.id).then(user => {
       res.json(user)
@@ -36,7 +35,7 @@ function getById(req, res){
   }
 }
 
-function create(req, res){
+function create(req, res) {
   try{
     let user = req.body
     let pass = user.password
@@ -55,7 +54,7 @@ function create(req, res){
   }
 }
 
-function update(req, res){
+function update(req, res) {
   try{
     User.findByPk(req.params.id).then(user => {
       User.update(req.body, { where: { id: user.id }}).then(() => {
@@ -71,7 +70,7 @@ function update(req, res){
   }
 }
 
-function destroy(req, res){
+function destroy(req, res) {
   try{
     User.findByPk(req.params.id).then(user => {
       let id = user ? user.id : 0;
@@ -88,7 +87,7 @@ function destroy(req, res){
   }
 }
 
-function login(req, res){
+function login(req, res) {
   try{
     User.findOne({where : { email: req.body.email }}).then(user => {
       if(user){
@@ -110,7 +109,7 @@ function login(req, res){
   }
 }
 
-function checkToken(req, res){
+function checkToken(req, res) {
   try {
     if(!req.headers.authorization){
       return res.status(403).send({error: true, message: 'Authorization header not found'})
@@ -138,33 +137,16 @@ function checkToken(req, res){
   
 }
 
-function uploadAvatar(req, res){
-  let dir = req.headers.directory
-  var storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, path.join(__dirname, '../assets/img/'+dir+'/'))
-    },
-    filename: function (req, file, cb) {
-      cb(null, moment().unix()+'_'+Math.floor(Math.random() * 10000)+path.extname(file.originalname))
+function uploadImage(req, res) {
+  if (!req.file) {
+    return res.status(400).json({ error: 'No file uploaded' });
+  }
+  cloudinary.uploader.upload_stream({ resource_type: 'auto' }, (error, result) => {
+    if (error) {
+      return res.status(500).json({ error: 'Error uploading to Cloudinary' });
     }
-  })
-  var upload = multer({ storage: storage }).single('avatar')
-  upload(req, res, function(err){
-    if (req.fileValidationError) {
-      return res.status(500).send({error: true, message: 'Internal Server Error', data: req.fileValidationError})
-    }
-    else if (!req.file) {
-      console.log('RUGO', req.file)
-      return res.status(400).send({error: true, message: 'Bad Request, nor req file'})
-    }
-    else if (err instanceof multer.MulterError) {
-      return res.status(500).send({error: true, message: 'Internal Server Error', data: err})
-    }
-    else if (err) {
-      return res.status(500).send({error: true, message: 'Internal Server Error', data: err})
-    }
-    res.status(200).send({error: false, data: path.basename(req.file.path)})
-  })
+    res.status(200).send({error: false, data: result.secure_url})
+  }).end(req.file.buffer);
 }
 
 module.exports = {
@@ -175,5 +157,5 @@ module.exports = {
   destroy,
   login,
   checkToken,
-  uploadAvatar
+  uploadImage
 }

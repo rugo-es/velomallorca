@@ -1,5 +1,5 @@
 /* Login */
-function login(){
+function login() {
   let data = JSON.stringify({
     email: $("#email").val(),
     password: $("#password").val()
@@ -22,7 +22,7 @@ function login(){
     })
 }
 
-function register(){
+function register() {
   let user = {
     name: $("#name").val(),
     surname: $("#surname").val(),
@@ -31,11 +31,11 @@ function register(){
     role: $("input[name=role]:checked").val(),
     image: null
   }
-  if($("#image")[0].files.length > 0){
-    try{
+  if($("#image")[0].files.length > 0) {
+    try {
       let file = $("#image")[0].files[0]
       var data = new FormData();
-      data.append("avatar", file);
+      data.append("image", file);
       var xhr = new XMLHttpRequest();
       xhr.withCredentials = true;
       xhr.addEventListener("readystatechange", function() {
@@ -45,9 +45,9 @@ function register(){
           createUser(user)
         }
       });
-      xhr.open("POST", "/api/uploadAvatar");
+      xhr.open("POST", "/api/uploadImage");
       xhr.send(data)
-    }catch(e){
+    } catch(e) {
       console.log(e)
     }
   }else{

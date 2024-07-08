@@ -72,7 +72,7 @@ function addFramesetColorElements(colorId, colorData = null) {
       try {
         let file = $(`#image-${colorId}`)[0].files[0]
         var data = new FormData();
-        data.append("avatar", file);
+        data.append("image", file);
         var xhr = new XMLHttpRequest();
         xhr.withCredentials = true;
         xhr.addEventListener("readystatechange", function() {
@@ -83,8 +83,8 @@ function addFramesetColorElements(colorId, colorData = null) {
             img.onload = () => {
               ctx.drawImage(img, 125, 35, 250, img.height * (250/img.width));
             };
-            img.src = `/img/framesets/${response.data}`;
-            frameset.colors[colorId].image = `/img/framesets/${response.data}`;
+            img.src = response.data;
+            frameset.colors[colorId].image = response.data;
             $(`#frontWheelLabel-${colorId}`).removeClass('btn-success btn-danger').addClass('btn-dark')
             $(`#backWheelLabel-${colorId}`).removeClass('btn-success btn-danger').addClass('btn-dark')
             $(`#setLabel-${colorId}`).removeClass('btn-success btn-danger').addClass('btn-dark')
@@ -105,8 +105,8 @@ function addFramesetColorElements(colorId, colorData = null) {
             frameset.colors[colorId].anchors.diverter.y = false
           }
         });
-        xhr.open("POST", "/api/uploadAvatar");
-        xhr.setRequestHeader("Directory", "framesets");
+        xhr.open("POST", "/api/uploadImage");
+        // xhr.setRequestHeader("Directory", "framesets");
         xhr.send(data)
       } catch(e) {
         console.log(e)
