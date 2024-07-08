@@ -154,7 +154,8 @@ function uploadAvatar(req, res){
       return res.status(500).send({error: true, message: 'Internal Server Error', data: req.fileValidationError})
     }
     else if (!req.file) {
-      return res.status(400).send({error: true, message: 'Bad Request'})
+      console.log('RUGO', req.file)
+      return res.status(400).send({error: true, message: 'Bad Request, nor req file'})
     }
     else if (err instanceof multer.MulterError) {
       return res.status(500).send({error: true, message: 'Internal Server Error', data: err})

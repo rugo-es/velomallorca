@@ -7,6 +7,7 @@ const basename = path.basename(__filename);
 const config = require(__dirname + '/../config/db.js');
 const db = {};
 const sequelize = new Sequelize(config.url, {
+  dialectModule: require('pg'),
   dialectOptions: {
     application_name: "velomallorca_bikebuilder",
     ssl: true

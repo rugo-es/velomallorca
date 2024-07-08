@@ -17,3 +17,4 @@ app/assets/img/seatpots/*
 !app/assets/img/seatpots/.gitignore
 app/assets/img/saddles/*
 !app/assets/img/saddles/.gitignore
+.vercel
